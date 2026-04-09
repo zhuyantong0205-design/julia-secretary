@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Julia的秘书一号</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&family=Noto+Serif+SC:wght@300;400&display=swap');
+:root{--black:#0a0a0a;--white:#f5f5f3;--g1:#1a1a1a;--g2:#2a2a2a;--g3:#404040;--g4:#6a6a6a;--g5:#9a9a9a;--g6:#c8c8c8;--bd:#222}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--bd);flex-shrink:0}
+.hdr-title{font-family:'EB Garamond',serif;font-size:18px;letter-spacing:.04em}
+.hdr-sub{font-size:10px;color:var(--g4);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+.hdr-r{display:flex;gap:6px}
+.hbtn{width:32px;height:32px;background:none;border:1px solid var(--bd);color:var(--g4);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:'DM Sans',sans-serif}
+.hbtn:hover,.hbtn.on{border-color:var(--g3);color:var(--white)}
+.body{display:flex;flex:1;overflow:hidden;height:calc(100vh - 57px)}
+.reading{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.reading.pushed{margin-right:300px}
+.upload-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;gap:18px}
+.u-mark{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--g4)}
+.u-title{font-family:'EB Garamond',serif;font-size:34px;color:var(--white);line-height:1.2}
+.u-desc{font-size:12px;color:var(--g4);line-height:1.9;max-width:260px}
+.u-zone{width:100%;max-width:280px;border:1px solid var(--bd);padding:22px;cursor:pointer;transition:border-color .2s;display:flex;flex-direction:column;align-items:center;gap:8px}
+.u-zone:hover{border-color:var(--g3)}
+.u-zone-icon{font-size:22px;color:var(--g4)}
+.u-zone-text{font-size:13px;color:var(--g5)}
+.u-zone-sub{font-size:11px;color:var(--g4)}
+#fileInput{display:none}
+.resume-btn{font-size:12px;color:var(--g4);background:none;border:1px solid var(--bd);padding:8px 20px;cursor:pointer;letter-spacing:.1em;transition:all .15s;font-family:'DM Sans',sans-serif}
+.resume-btn:hover{color:var(--white);border-color:var(--g3)}
+.sum-wrap{border-bottom:1px solid var(--bd)}
+.sum-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer}
+.sum-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--g4)}
+.sum-tog{font-size:11px;color:var(--g4);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif}
+.sum-body{padding:0 18px 18px}
+.s-title{font-family:'EB Garamond',serif;font-size:24px;margin-bottom:6px;line-height:1.3}
+.s-subject{font-size:11px;letter-spacing:.1em;color:var(--g4);text-transform:uppercase;margin-bottom:14px}
+.s-text{font-size:13px;color:var(--g5);line-height:1.9;margin-bottom:14px}
+.s-concepts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.s-tag{font-size:11px;padding:3px 10px;border:1px solid var(--bd);color:var(--g5);letter-spacing:.06em}
+.s-q{font-family:'EB Garamond',serif;font-size:16px;font-style:italic;color:var(--g5);padding:12px 14px;border-left:1px solid var(--g3)}
+.artworks{display:flex;gap:10px;overflow-x:auto;padding:14px 18px;border-bottom:1px solid var(--bd);scrollbar-width:none}
+.artworks::-webkit-scrollbar{display:none}
+.aw-item{flex-shrink:0;width:110px}
+.aw-img{width:110px;height:80px;background:var(--g1);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--g4);text-align:center;padding:6px;background-size:cover;background-position:center}
+.aw-cap{padding:5px 0;font-size:10px;color:var(--g4);line-height:1.5}
+.ctrl{display:flex;align-items:center;gap:8px;padding:12px 18px;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.cbtn{font-size:11px;padding:5px 12px;background:none;border:1px solid var(--bd);color:var(--g4);cursor:pointer;letter-spacing:.08em;transition:all .15s;font-family:'DM Sans',sans-serif}
+.cbtn:hover{color:var(--white);border-color:var(--g3)}
+.cbtn.on{color:var(--white);border-color:var(--g5)}
+.vc{margin-left:auto;font-size:11px;color:var(--g4);letter-spacing:.08em}
+.vc span{color:var(--white)}
+.content-text{padding:20px 18px 100px;font-family:'EB Garamond',serif;font-size:19px;line-height:2;color:var(--white)}
+.content-text p{margin-bottom:1.4em}
+.content-text h1{font-size:22px;font-weight:400;margin:2em 0 .6em}
+.content-text h2{font-size:11px;font-weight:400;color:var(--g5);margin:1.6em 0 .5em;letter-spacing:.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif}
+.w{cursor:pointer;border-bottom:1px solid transparent;transition:border-color .1s}
+.w:hover{border-bottom-color:var(--g4)}
+.w.sel{border-bottom:1px solid var(--white)}
+.w.done{border-bottom:1px solid var(--g3);color:var(--g4)}
+.popup{position:fixed;z-index:200;background:var(--g1);border:1px solid var(--g2);padding:16px;width:248px;box-shadow:0 12px 40px rgba(0,0,0,.8);display:none}
+.popup.on{display:block}
+.p-word{font-family:'EB Garamond',serif;font-size:22px;margin-bottom:1px}
+.p-ph{font-size:11px;color:var(--g4);margin-bottom:8px;font-style:italic}
+.p-zh{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--white);margin-bottom:4px}
+.p-syn{font-size:11px;color:var(--g4);margin-bottom:12px;line-height:1.7}
+.p-acts{display:flex;gap:6px}
+.p-btn{flex:1;padding:7px 0;font-size:11px;letter-spacing:.08em;border:1px solid var(--bd);background:none;color:var(--g5);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.p-btn:hover{color:var(--white);border-color:var(--g3)}
+.p-btn.on{color:var(--white);border-color:var(--g5)}
+.vdrawer{position:fixed;bottom:0;left:0;right:0;background:var(--g1);border-top:1px solid var(--bd);z-index:150;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);max-height:60vh;overflow-y:auto}
+.vdrawer.on{transform:translateY(0)}
+.vd-head{padding:16px 18px 10px;border-bottom:1px solid var(--bd)}
+.vd-title{font-family:'EB Garamond',serif;font-size:20px}
+.vd-sub{font-size:11px;color:var(--g4);margin-top:2px;letter-spacing:.06em}
+.vd-list{padding:10px 18px;display:flex;flex-direction:column;gap:0}
+.vd-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.vd-row.done{opacity:.4}
+.vd-word{font-family:'EB Garamond',serif;font-size:18px;flex:1}
+.vd-zh{font-size:12px;color:var(--g5);flex:1;font-family:'Noto Serif SC',serif}
+.vd-acts{display:flex;gap:4px}
+.vd-btn{width:28px;height:28px;background:none;border:1px solid var(--bd);color:var(--g4);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.vd-btn:hover{color:var(--white);border-color:var(--g3)}
+.vd-empty{padding:24px 0;text-align:center;font-size:12px;color:var(--g4)}
+.end-btn{width:calc(100% - 36px);margin:10px 18px 18px;padding:12px;background:none;border:1px solid var(--g3);color:var(--g5);font-size:12px;letter-spacing:.1em;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.end-btn:hover{color:var(--white);border-color:var(--g4)}
+.chat-panel{position:fixed;top:57px;right:0;bottom:0;width:300px;background:var(--black);border-left:1px solid var(--bd);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:100}
+.chat-panel.on{transform:translateX(0)}
+.cp-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--bd);flex-shrink:0}
+.cp-title{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--g5)}
+.cp-modes{display:flex;border-bottom:1px solid var(--bd);flex-shrink:0}
+.cp-mode{flex:1;padding:9px 4px;font-size:11px;text-align:center;background:none;border:none;border-right:1px solid var(--bd);color:var(--g4);cursor:pointer;letter-spacing:.05em;font-family:'DM Sans',sans-serif;transition:all .15s}
+.cp-mode:last-child{border-right:none}
+.cp-mode.on{color:var(--white);background:var(--g1)}
+.cp-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.msg{font-size:13px;line-height:1.7;padding:10px 12px;max-width:94%}
+.msg-ai{background:var(--g1);border:1px solid var(--bd);align-self:flex-start;border-radius:0 6px 6px 6px;color:var(--white)}
+.msg-user{background:none;border:1px solid var(--g3);align-self:flex-end;border-radius:6px 0 6px 6px;color:var(--g5)}
+.cp-in-row{display:flex;border-top:1px solid var(--bd);flex-shrink:0}
+.cp-in{flex:1;background:none;border:none;padding:12px 14px;font-size:13px;color:var(--white);font-family:'DM Sans',sans-serif;outline:none;resize:none;max-height:80px;overflow-y:auto}
+.cp-in::placeholder{color:var(--g4)}
+.cp-send{width:44px;background:none;border:none;border-left:1px solid var(--bd);color:var(--g4);font-size:16px;cursor:pointer;transition:color .15s}
+.cp-send:hover{color:var(--white)}
+.dots span{display:inline-block;width:4px;height:4px;background:var(--g4);border-radius:50%;margin:0 2px;animation:bc 1.2s infinite}
+.dots span:nth-child(2){animation-delay:.2s}
+.dots span:nth-child(3){animation-delay:.4s}
+@keyframes bc{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+.loading{position:fixed;inset:0;background:var(--black);z-index:300;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+.loading.on{display:flex}
+.spin{width:22px;height:22px;border:1px solid var(--g3);border-top-color:var(--white);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.load-txt{font-size:12px;color:var(--g4);letter-spacing:.1em;text-align:center;max-width:220px;line-height:1.8}
+.toast{position:fixed;bottom:72px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--g1);border:1px solid var(--g3);color:var(--g5);padding:8px 18px;font-size:12px;z-index:500;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;letter-spacing:.06em}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--g2)}
+@media(max-width:600px){.chat-panel{width:100%}.reading.pushed{margin-right:0}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div><div class="hdr-title">Julia的秘书一号</div><div class="hdr-sub" id="subTag">— 上传课程文件 —</div></div>
+  <div class="hdr-r">
+    <button class="hbtn" onclick="toggleDrawer()">词</button>
+    <button class="hbtn" id="chatHbtn" onclick="toggleChat()">助</button>
+  </div>
+</div>
+<div class="body">
+  <div class="reading" id="reading">
+    <div class="upload-screen" id="uploadScreen">
+      <div><div class="u-mark">Julia's Secretary No.1</div><div class="u-title">上传今日<br>课堂讲义</div></div>
+      <div class="u-desc">支持 ePub · PDF · TXT<br>AI自动识别科目，整理重点<br>数据永久保存，随时继续</div>
+      <label class="u-zone" for="fileInput">
+        <div class="u-zone-icon">↑</div>
+        <div class="u-zone-text">选择文件</div>
+        <div class="u-zone-sub">NABA课程平台下载的ePub</div>
+      </label>
+      <input type="file" id="fileInput" accept=".epub,.pdf,.txt" onchange="handleUpload(event)">
+      <button class="resume-btn" id="resumeBtn" style="display:none" onclick="resumeLesson()">继续上次课程 ↗</button>
+    </div>
+    <div id="lessonView" style="display:none">
+      <div class="sum-wrap">
+        <div class="sum-head" onclick="toggleSum()">
+          <span class="sum-label">课程摘要 · Summary</span>
+          <button class="sum-tog" id="sumTog">收起</button>
+        </div>
+        <div id="sumBody" class="sum-body">
+          <div class="s-title" id="sTitle"></div>
+          <div class="s-subject" id="sSubject"></div>
+          <div class="s-text" id="sText"></div>
+          <div class="s-concepts" id="sConcepts"></div>
+          <div class="s-q" id="sQ"></div>
+        </div>
+      </div>
+      <div class="artworks" id="artworks" style="display:none"></div>
+      <div class="ctrl">
+        <button class="cbtn" id="readBtn" onclick="toggleRead()">▶ 朗读</button>
+        <button class="cbtn" onclick="stopRead()">■ 停止</button>
+        <div class="vc">已选 <span id="vcN">0</span> 词</div>
+      </div>
+      <div class="content-text" id="contentText"></div>
+    </div>
+  </div>
+  <div class="chat-panel" id="chatPanel">
+    <div class="cp-head">
+      <span class="cp-title">学习助手</span>
+      <button class="hbtn" onclick="toggleChat()" style="width:26px;height:26px;font-size:11px">✕</button>
+    </div>
+    <div class="cp-modes">
+      <button class="cp-mode on" id="cm-tutor" onclick="setMode('tutor')">讲解</button>
+      <button class="cp-mode" id="cm-oral" onclick="setMode('oral')">口语</button>
+      <button class="cp-mode" id="cm-write" onclick="setMode('write')">写作</button>
+      <button class="cp-mode" id="cm-free" onclick="setMode('free')">闲聊</button>
+    </div>
+    <div class="cp-msgs" id="cpMsgs"></div>
+    <div class="cp-in-row">
+      <textarea class="cp-in" id="cpIn" placeholder="输入问题..." rows="1"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg()}"
+        oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px'"></textarea>
+      <button class="cp-send" onclick="sendMsg()">↑</button>
+    </div>
+  </div>
+</div>
+<div class="vdrawer" id="vdrawer">
+  <div class="vd-head"><div class="vd-title">词汇本</div><div class="vd-sub" id="vdSub">本课 0 词</div></div>
+  <div class="vd-list" id="vdList"></div>
+  <button class="end-btn" onclick="endLesson()">结束本课 · 上传下一个讲义</button>
+</div>
+<div class="popup" id="popup">
+  <div class="p-word" id="pWord"></div>
+  <div class="p-ph" id="pPh"></div>
+  <div class="p-zh" id="pZh">加载中...</div>
+  <div class="p-syn" id="pSyn"></div>
+  <div class="p-acts">
+    <button class="p-btn" onclick="speakWord(currentWord)">🔊 发音</button>
+    <button class="p-btn" id="pAdd" onclick="doAdd()">+ 加入词单</button>
+  </div>
+</div>
+<div class="loading" id="loading"><div class="spin"></div><div class="load-txt" id="loadTxt">分析中...</div></div>
+<div class="toast" id="toast"></div>
+<script>
+const GK='AIzaSyCfWht_xv67L1xXeJbaL7WgDmpRmGkNTZQ';
+const GU=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GK}`;
+const SU='https://wbgmyoolenmbvnfeupkll.supabase.co';
+const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndiZ215b29lbmJtdm5mZXVwa2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MjEyNjcsImV4cCI6MjA5MTI5NzI2N30.i3d4C1p7j1P24UNaa_4GRSq_m3NmvcFzaUvo93FXxgw';
+
+let lesson=null,vocab=[],chatHist=[],chatMode='tutor',curWord='',popData={},sumOpen=true,talking=false;
+
+async function ai(prompt,sys=''){
+  const body={contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:2048,temperature:0.7}};
+  if(sys)body.system_instruction={parts:[{text:sys}]};
+  const r=await fetch(GU,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const d=await r.json();
+  if(d.error)throw new Error(d.error.message);
+  return d.candidates?.[0]?.content?.parts?.[0]?.text||'';
+}
+async function aiChat(msgs,sys){
+  const contents=msgs.map(m=>({role:m.role==='ai'?'model':'user',parts:[{text:m.content}]}));
+  const body={contents,generationConfig:{maxOutputTokens:1024,temperature:0.85}};
+  if(sys)body.system_instruction={parts:[{text:sys}]};
+  const r=await fetch(GU,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const d=await r.json();
+  if(d.error)throw new Error(d.error.message);
+  return d.candidates?.[0]?.content?.parts?.[0]?.text||'';
+}
+
+const H={'apikey':SK,'Authorization':'Bearer '+SK,'Content-Type':'application/json'};
+async function sbGet(t,q=''){const r=await fetch(`${SU}/rest/v1/${t}?${q}&order=created_at.desc`,{headers:H});return r.json();}
+async function sbPost(t,d){const r=await fetch(`${SU}/rest/v1/${t}`,{method:'POST',headers:{...H,'Prefer':'return=representation'},body:JSON.stringify(d)});return r.json();}
+async function sbPatch(t,id,d){await fetch(`${SU}/rest/v1/${t}?id=eq.${id}`,{method:'PATCH',headers:H,body:JSON.stringify(d)});}
+async function sbDel(t,f){await fetch(`${SU}/rest/v1/${t}?${f}`,{method:'DELETE',headers:H});}
+
+async function init(){
+  try{const ls=await sbGet('lessons','is_active=eq.true&limit=1');if(ls?.length)document.getElementById('resumeBtn').style.display='block';}catch(e){}
+}
+init();
+
+async function handleUpload(e){
+  const file=e.target.files[0];if(!file)return;
+  showLoad('读取文件...');
+  let text='';
+  try{
+    if(file.name.endsWith('.epub'))text=await readEpub(file);
+    else text=await file.text();
+  }catch(err){hideLoad();toast('读取失败');return;}
+  if(!text||text.length<50){hideLoad();toast('内容为空，请试其他格式');return;}
+  await processLesson(text.slice(0,7000),file.name);
+}
+
+async function readEpub(file){
+  const buf=await file.arrayBuffer();
+  const dec=new TextDecoder('utf-8',{fatal:false});
+  const raw=dec.decode(new Uint8Array(buf));
+  const bodies=[...raw.matchAll(/<body[^>]*>([\s\S]*?)<\/body>/gi)];
+  if(bodies.length)return bodies.map(m=>m[1].replace(/<[^>]+>/g,' ').replace(/\s+/g,' ')).join(' ').trim();
+  return raw.replace(/<[^>]+>/g,' ').replace(/&[a-z]+;/gi,' ').replace(/\s+/g,' ').trim();
+}
+
+async function processLesson(text,filename){
+  showLoad('AI识别科目...');
+  try{
+    const metaRaw=await ai(`Analyze this university lesson. Return ONLY valid JSON no markdown:\n{"title":"string","subject":"English name","subject_zh":"中文科目","summary_zh":"2句中文","summary_en":"2 sentence English","key_concepts":["c1","c2","c3","c4"],"core_question":"key question","artworks":[{"artist":"name","work":"title","year":"y"}]}\n\nTEXT:${text.slice(0,2500)}`);
+    const j1=metaRaw.indexOf('{'),j2=metaRaw.lastIndexOf('}');
+    if(j1===-1)throw new Error('解析失败');
+    const meta=JSON.parse(metaRaw.slice(j1,j2+1));
+    showLoad('整理正文...');
+    const cleaned=await ai(`Reformat this lesson for clean reading. Keep ALL original English. Add ## for sections. Fix broken lines. Return plain text only:\n\n${text.slice(0,5000)}`);
+    meta.processed_content=cleaned||text;
+    showLoad('保存到云端...');
+    const old=await sbGet('lessons','is_active=eq.true');
+    if(old?.length)for(const l of old)await sbPatch('lessons',l.id,{is_active:false});
+    const saved=await sbPost('lessons',{title:meta.title||filename,subject:`${meta.subject} · ${meta.subject_zh}`,content:meta.processed_content,summary:JSON.stringify(meta),is_active:true});
+    if(!saved?.[0])throw new Error('保存失败');
+    lesson=saved[0];lesson._meta=meta;vocab=[];
+    renderLesson(meta);hideLoad();
+    setTimeout(initChat,600);
+  }catch(err){hideLoad();toast('失败: '+err.message);console.error(err);}
+}
+
+async function resumeLesson(){
+  showLoad('加载课程...');
+  try{
+    const ls=await sbGet('lessons','is_active=eq.true&limit=1');
+    if(!ls?.length){hideLoad();toast('没有保存的课程');return;}
+    lesson=ls[0];
+    try{lesson._meta=JSON.parse(lesson.summary);}catch(e){lesson._meta={};}
+    vocab=await sbGet('vocab_items',`lesson_id=eq.${lesson.id}`)||[];
+    renderLesson(lesson._meta);hideLoad();
+    setTimeout(initChat,600);
+  }catch(e){hideLoad();toast('加载失败');}
+}
+
+function renderLesson(meta){
+  document.getElementById('uploadScreen').style.display='none';
+  document.getElementById('lessonView').style.display='block';
+  document.getElementById('subTag').textContent=meta.subject||lesson.subject||'';
+  document.getElementById('sTitle').textContent=meta.title||'';
+  document.getElementById('sSubject').textContent=(meta.subject||'')+(meta.subject_zh?' · '+meta.subject_zh:'');
+  document.getElementById('sText').innerHTML=`<b>EN</b> ${meta.summary_en||''}<br><br><b>中</b> ${meta.summary_zh||''}`;
+  document.getElementById('sConcepts').innerHTML=(meta.key_concepts||[]).map(c=>`<span class="s-tag">${c}</span>`).join('');
+  document.getElementById('sQ').textContent=meta.core_question?`"${meta.core_question}"` :'';
+  if(meta.artworks?.length)renderArtworks(meta.artworks);
+  renderContent(meta.processed_content||lesson.content||'');
+  renderVocab();updateVocabN();
+}
+
+function renderArtworks(aws){
+  const el=document.getElementById('artworks');el.style.display='flex';
+  el.innerHTML=aws.map((a,i)=>`<div class="aw-item"><div class="aw-img" id="awi${i}">${a.artist}<br><span style="color:#444">${a.year||''}</span></div><div class="aw-cap">${a.work||''}<br>${a.artist||''}</div></div>`).join('');
+  aws.forEach((a,i)=>{
+    fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(a.artist.split(' ').pop())}`)
+      .then(r=>r.json()).then(d=>{if(d.thumbnail?.source){const el=document.getElementById(`awi${i}`);if(el){el.style.backgroundImage=`url(${d.thumbnail.source})`;el.style.backgroundSize='cover';el.style.backgroundPosition='center';el.innerHTML='';}}}). catch(()=>{});
+  });
+}
+
+function renderContent(md){
+  const sel=new Set(vocab.filter(v=>v.selected).map(v=>v.word.toLowerCase()));
+  const done=new Set(vocab.filter(v=>v.mastered).map(v=>v.word.toLowerCase()));
+  let html=md.replace(/^## (.+)$/gm,'<h2>$1</h2>').replace(/^# (.+)$/gm,'<h1>$1</h1>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'</p><p>').replace(/\n/g,' ');
+  html='<p>'+html+'</p>';
+  html=html.replace(/(<[^>]+>)|([A-Za-zÀ-ÖØ-öø-ÿ''\-]+)/g,(m,tag,word)=>{
+    if(tag)return tag;if(!word||word.length<3)return word;
+    const lo=word.toLowerCase();
+    const cls=done.has(lo)?'w done':sel.has(lo)?'w sel':'w';
+    return `<span class="${cls}" onclick="clickWord(event,'${lo}','${word.replace(/'/g,"\\'")}')">${word}</span>`;
+  });
+  document.getElementById('contentText').innerHTML=html;
+}
+
+async function clickWord(e,lo,orig){
+  e.stopPropagation();curWord=lo;
+  const existing=vocab.find(v=>v.word.toLowerCase()===lo&&v.selected);
+  document.getElementById('pWord').textContent=orig;
+  document.getElementById('pPh').textContent='';
+  document.getElementById('pZh').textContent=existing?.zh||'加载中...';
+  document.getElementById('pSyn').textContent=existing?.synonyms?'近义 · '+existing.synonyms:'';
+  const addBtn=document.getElementById('pAdd');
+  addBtn.textContent=existing?'✓ 已在词单':'+ 加入词单';
+  addBtn.className='p-btn'+(existing?' on':'');
+  popData={lo,orig,existing};
+  const rect=e.target.getBoundingClientRect();
+  const popup=document.getElementById('popup');
+  popup.style.left=Math.max(8,Math.min(rect.left,window.innerWidth-260))+'px';
+  popup.style.top=(rect.bottom+window.scrollY+6)+'px';
+  popup.classList.add('on');
+  if(!existing)fetchDef(lo,orig);
+}
+
+async function fetchDef(lo,orig){
+  try{
+    const raw=await ai(`Word: "${orig}" context: ${lesson?.subject||'art'}. ONLY JSON: {"phonetic":"/x/ British","zh":"中文2-4字","synonyms":"w1, w2","type":"noun"}`);
+    const j1=raw.indexOf('{'),j2=raw.lastIndexOf('}');
+    if(j1===-1)return;
+    const def=JSON.parse(raw.slice(j1,j2+1));
+    popData.def=def;
+    if(curWord===lo&&document.getElementById('popup').classList.contains('on')){
+      document.getElementById('pPh').textContent=def.phonetic||'';
+      document.getElementById('pZh').textContent=def.zh||orig;
+      document.getElementById('pSyn').textContent=def.synonyms?'近义 · '+def.synonyms:'';
+    }
+  }catch(e){document.getElementById('pZh').textContent=orig;}
+}
+
+async function doAdd(){
+  const{lo,orig,existing,def}=popData;
+  if(existing){
+    await sbDel('vocab_items',`id=eq.${existing.id}`);
+    vocab=vocab.filter(v=>v.id!==existing.id);toast('已移除');
+  }else{
+    const data={lesson_id:lesson.id,word:orig,phonetic:def?.phonetic||'',zh:def?.zh||'',synonyms:def?.synonyms||'',type:def?.type||'',selected:true,mastered:false,review_count:0};
+    const saved=await sbPost('vocab_items',data);
+    if(saved?.[0])vocab.push(saved[0]);
+    toast('已加入: '+orig);
+  }
+  document.getElementById('popup').classList.remove('on');
+  renderContent(lesson._meta?.processed_content||lesson.content);
+  renderVocab();updateVocabN();
+}
+
+function toggleDrawer(){const d=document.getElementById('vdrawer');d.classList.toggle('on');if(d.classList.contains('on'))renderVocab();}
+
+function renderVocab(){
+  const sel=vocab.filter(v=>v.selected);
+  document.getElementById('vdSub').textContent=`本课 ${sel.length} 词 · ${sel.filter(v=>v.mastered).length} 已掌握`;
+  const list=document.getElementById('vdList');
+  if(!sel.length){list.innerHTML='<div class="vd-empty">还没有选词<br>点击正文单词添加</div>';return;}
+  list.innerHTML=sel.map(v=>`<div class="vd-row ${v.mastered?'done':''}"><div class="vd-word">${v.word}</div><div class="vd-zh">${v.zh||''}</div><div class="vd-acts"><button class="vd-btn" onclick="speakWord('${v.word}')">♪</button><button class="vd-btn" onclick="markDone('${v.id}')">${v.mastered?'↩':'✓'}</button><button class="vd-btn" onclick="rmWord('${v.id}')">×</button></div></div>`).join('');
+}
+
+function updateVocabN(){document.getElementById('vcN').textContent=vocab.filter(v=>v.selected).length;}
+
+async function markDone(id){
+  const v=vocab.find(x=>x.id===id);if(!v)return;
+  v.mastered=!v.mastered;
+  await sbPatch('vocab_items',id,{mastered:v.mastered});
+  renderVocab();renderContent(lesson._meta?.processed_content||lesson.content);
+  toast(v.mastered?'✓ 已掌握':'↩ 取消');
+}
+
+async function rmWord(id){
+  await sbDel('vocab_items',`id=eq.${id}`);
+  vocab=vocab.filter(v=>v.id!==id);
+  renderVocab();updateVocabN();
+  renderContent(lesson._meta?.processed_content||lesson.content);
+}
+
+async function endLesson(){
+  if(!lesson)return;
+  if(!confirm('结束本课？'))return;
+  await sbPatch('lessons',lesson.id,{is_active:false});
+  lesson=null;vocab=[];chatHist=[];
+  document.getElementById('lessonView').style.display='none';
+  document.getElementById('uploadScreen').style.display='flex';
+  document.getElementById('subTag').textContent='— 上传课程文件 —';
+  document.getElementById('vdrawer').classList.remove('on');
+  document.getElementById('fileInput').value='';
+  toast('课程已结束');
+}
+
+function speakWord(w){
+  if(!w)return;speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(w);u.lang='en-GB';u.rate=0.82;
+  const vs=speechSynthesis.getVoices();
+  const gb=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.name.includes('Daniel')||v.name.includes('Kate'));
+  if(gb)u.voice=gb;speechSynthesis.speak(u);
+}
+
+let rIdx=0,rSents=[];
+function toggleRead(){
+  if(talking){stopRead();return;}talking=true;
+  document.getElementById('readBtn').textContent='■ 朗读中';document.getElementById('readBtn').classList.add('on');
+  const text=document.getElementById('contentText').innerText;
+  rSents=text.match(/[^.!?]+[.!?]+/g)||[text];rIdx=0;readNext();
+}
+function readNext(){
+  if(!talking||rIdx>=rSents.length){stopRead();return;}
+  const u=new SpeechSynthesisUtterance(rSents[rIdx]);u.lang='en-GB';u.rate=0.8;
+  const vs=speechSynthesis.getVoices();
+  const gb=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.name.includes('Daniel'));
+  if(gb)u.voice=gb;u.onend=()=>{rIdx++;readNext();};speechSynthesis.speak(u);
+}
+function stopRead(){talking=false;speechSynthesis.cancel();document.getElementById('readBtn').textContent='▶ 朗读';document.getElementById('readBtn').classList.remove('on');}
+setTimeout(()=>speechSynthesis.getVoices(),300);
+
+function toggleChat(){
+  const p=document.getElementById('chatPanel');const r=document.getElementById('reading');
+  const on=p.classList.toggle('on');
+  document.getElementById('chatHbtn').classList.toggle('on',on);
+  if(window.innerWidth>600)r.classList.toggle('pushed',on);
+  if(on&&!chatHist.length)initChat();
+}
+
+function setMode(m){
+  chatMode=m;document.querySelectorAll('.cp-mode').forEach(b=>b.classList.remove('on'));
+  document.getElementById('cm-'+m).classList.add('on');
+  chatHist=[];document.getElementById('cpMsgs').innerHTML='';initChat();
+}
+
+function getSys(){
+  const subj=lesson?.subject||'art and philosophy';
+  let ctx='';
+  if(lesson?._meta){const m=lesson._meta;ctx=`Lesson:"${m.title}". Concepts:${(m.key_concepts||[]).join(',')}. Question:${m.core_question||''}`;}
+  const rw=vocab.slice(-6).map(v=>v.word).join(',')||'aesthetics,phenomenology';
+  const prof=`STUDENT: Chinese girl, Painting & Visual Arts BA at NABA Milan Year 1. B1 English (reading near B2, speaking very weak). ADHD. Introverted, shy, anxious. Goal: B2/C1 oral exam in 2 years. Now studying: ${subj}. ${ctx}. Recent vocab: ${rw}.`;
+  const ps={
+    tutor:`${prof}\nYOU: Passionate art/philosophy professor, fluent Chinese+English.\n- Max 4 sentences. ADHD = no walls of text.\n- Answer Chinese first, English terms in brackets: 现象学[phenomenology]\n- One analogy or artwork example per answer\n- End with ONE curiosity question\n- Never say "it's simple"\nOpen: Ask what confused or interested her today.`,
+    oral:`${prof}\nYOU: Warm oral coach for shy Chinese art students.\nFLOW: 1)Warm up casual 2-3 exchanges 2)Bridge to art 3)Practice one concept 4)Exam prep only if relaxed\nRULES: Never interrupt. Correct max 2 errors AFTER she finishes. If Chinese: encourage one English sentence gently. Celebrate every attempt.\nOpen: Greet warmly, ask something easy about her week.`,
+    write:`${prof}\nYOU: Writing coach, tiny wins one sentence at a time.\nSTART with ONE task (pick easiest): a)"Finish: In this lesson art means ___" b)"Describe one artwork in 8 words" c)"One English sentence about Milan today"\nCORRECTION: ✗You wrote:[text] ✓Try:[corrected] 💡Because:[one reason] →Next:[harder task]\nIf Chinese: translate it, say "read this aloud — counts as practice".\nOpen: Give the easiest task warmly.`,
+    free:`${prof}\nYOU: Smart funny friend in Milan, mix Chinese+English naturally.\nShort replies. Explain English words in brackets casually. Be genuinely curious.\nOpen: Share something surprising about art or Milan, ask what's on her mind.`
+  };
+  return ps[chatMode];
+}
+
+async function initChat(){
+  addDots();
+  try{const r=await aiChat([{role:'user',content:'Start.'}],getSys());removeDots();addMsg('ai',r);chatHist.push({role:'ai',content:r});}
+  catch(e){removeDots();addMsg('ai','连接失败: '+e.message);}
+}
+
+async function sendMsg(){
+  const inp=document.getElementById('cpIn');const txt=inp.value.trim();if(!txt)return;
+  inp.value='';inp.style.height='auto';
+  addMsg('user',txt);chatHist.push({role:'user',content:txt});addDots();
+  try{const r=await aiChat(chatHist.slice(-16),getSys());removeDots();addMsg('ai',r);chatHist.push({role:'ai',content:r});}
+  catch(e){removeDots();addMsg('ai','出错: '+e.message);}
+}
+
+function addMsg(role,text){
+  const el=document.getElementById('cpMsgs');
+  const d=document.createElement('div');d.className=`msg msg-${role}`;d.textContent=text;
+  el.appendChild(d);el.scrollTop=el.scrollHeight;
+}
+function addDots(){
+  const el=document.getElementById('cpMsgs');
+  const d=document.createElement('div');d.className='msg msg-ai';d.id='dots';
+  d.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
+  el.appendChild(d);el.scrollTop=el.scrollHeight;
+}
+function removeDots(){document.getElementById('dots')?.remove();}
+
+function toggleSum(){sumOpen=!sumOpen;document.getElementById('sumBody').style.display=sumOpen?'block':'none';document.getElementById('artworks').style.display=sumOpen?'flex':'none';document.getElementById('sumTog').textContent=sumOpen?'收起':'展开';}
+
+function showLoad(t){document.getElementById('loadTxt').textContent=t;document.getElementById('loading').classList.add('on');}
+function hideLoad(){document.getElementById('loading').classList.remove('on');}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2200);}
+
+document.addEventListener('click',e=>{
+  const p=document.getElementById('popup');
+  if(!p.contains(e.target)&&!e.target.classList.contains('w'))p.classList.remove('on');
+});
+</script>
+</body>
+</html>
