@@ -175,7 +175,20 @@ html,body{height:100%;overflow:hidden;background:var(--black);color:var(--white)
   </div>
 </div>
 <div class="vdrawer" id="vdrawer">
-  <div class="vd-head"><div class="vd-title">词汇本</div><div class="vd-sub" id="vdS​​​​​​​​​​​​​​​​
+  <div class="vd-head"><div class="vd-title">词汇本</div><div class="vd-sub" id="vdS​​​​​​​​​​​​​​​​ub">本课 0 词</div></div>
+    <div class="vd-list" id="vdList"></div>
+  <button class="end-btn" onclick="endLesson()">结束本课 · 上传下一个讲义</button>
+</div>
+<div class="popup" id="popup">
+  <div class="p-word" id="pWord"></div><div class="p-ph" id="pPh"></div>
+  <div class="p-zh" id="pZh">加载中...</div><div class="p-syn" id="pSyn"></div>
+  <div class="p-acts">
+    <button class="p-btn" onclick="speakWord(currentWord)">🔊 发音</button>
+    <button class="p-btn" id="pAdd" onclick="doAdd()">+ 加入词单</button>
+  </div>
+</div>
+<div class="loading" id="loading"><div class="spin"></div><div class="load-txt" id="loadTxt">分析中...</div></div>
+<div class="toast" id="toast"></div>
 <script>
 const OR_KEY='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';
 const OR_URL='https://openrouter.ai/api/v1/chat/completions';
