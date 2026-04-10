@@ -114,9 +114,7 @@ html,body{height:100%;overflow:hidden;background:var(--black);color:var(--white)
 .load-txt{font-size:12px;color:var(--g4);letter-spacing:.1em;text-align:center;max-width:220px;line-height:1.8}
 .toast{position:fixed;bottom:72px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--g1);border:1px solid var(--g3);color:var(--g5);padding:8px 18px;font-size:12px;z-index:500;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;letter-spacing:.06em}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--g2)}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--g2)}
 @media(max-width:600px){.chat-panel{width:100%}.reading.pushed{margin-right:0}}
 </style>
 </head>
@@ -143,15 +141,10 @@ html,body{height:100%;overflow:hidden;background:var(--black);color:var(--white)
     </div>
     <div id="lessonView" style="display:none">
       <div class="sum-wrap">
-        <div class="sum-head" onclick="toggleSum()">
-          <span class="sum-label">课程摘要 · Summary</span>
-          <button class="sum-tog" id="sumTog">收起</button>
-        </div>
+        <div class="sum-head" onclick="toggleSum()"><span class="sum-label">课程摘要 · Summary</span><button class="sum-tog" id="sumTog">收起</button></div>
         <div id="sumBody" class="sum-body">
-          <div class="s-title" id="sTitle"></div>
-          <div class="s-subject" id="sSubject"></div>
-          <div class="s-text" id="sText"></div>
-          <div class="s-concepts" id="sConcepts"></div>
+          <div class="s-title" id="sTitle"></div><div class="s-subject" id="sSubject"></div>
+          <div class="s-text" id="sText"></div><div class="s-concepts" id="sConcepts"></div>
           <div class="s-q" id="sQ"></div>
         </div>
       </div>
@@ -165,10 +158,7 @@ html,body{height:100%;overflow:hidden;background:var(--black);color:var(--white)
     </div>
   </div>
   <div class="chat-panel" id="chatPanel">
-    <div class="cp-head">
-      <span class="cp-title">学习助手</span>
-      <button class="hbtn" onclick="toggleChat()" style="width:26px;height:26px;font-size:11px">✕</button>
-    </div>
+    <div class="cp-head"><span class="cp-title">学习助手</span><button class="hbtn" onclick="toggleChat()" style="width:26px;height:26px;font-size:11px">✕</button></div>
     <div class="cp-modes">
       <button class="cp-mode on" id="cm-tutor" onclick="setMode('tutor')">讲解</button>
       <button class="cp-mode" id="cm-oral" onclick="setMode('oral')">口语</button>
@@ -185,53 +175,43 @@ html,body{height:100%;overflow:hidden;background:var(--black);color:var(--white)
   </div>
 </div>
 <div class="vdrawer" id="vdrawer">
-  <div class="vd-head"><div class="vd-title">词汇本</div><div class="vd-sub" id="vdSub">本课 0 词</div></div>
-  <div class="vd-list" id="vdList"></div>
-  <button class="end-btn" onclick="endLesson()">结束本课 · 上传下一个讲义</button>
-</div>
-<div class="popup" id="popup">
-  <div class="p-word" id="pWord"></div>
-  <div class="p-ph" id="pPh"></div>
-  <div class="p-zh" id="pZh">加载中...</div>
-  <div class="p-syn" id="pSyn"></div>
-  <div class="p-acts">
-    <button class="p-btn" onclick="speakWord(currentWord)">🔊 发音</button>
-    <button class="p-btn" id="pAdd" onclick="doAdd()">+ 加入词单</button>
-  </div>
-</div>
-<div class="loading" id="loading"><div class="spin"></div><div class="load-txt" id="loadTxt">分析中...</div></div>
-<div class="toast" id="toast"></div>
+  <div class="vd-head"><div class="vd-title">词汇本</div><div class="vd-sub" id="vdS​​​​​​​​​​​​​​​​
 <script>
-const GK='AIzaSyCfWht_xv67L1xXeJbaL7WgDmpRmGkNTZQ';
-const GU=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GK}`;
-const SU='https://wbgmyoolenmbvnfeupkll.supabase.co';
-const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndiZ215b29lbmJtdm5mZXVwa2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MjEyNjcsImV4cCI6MjA5MTI5NzI2N30.i3d4C1p7j1P24UNaa_4GRSq_m3NmvcFzaUvo93FXxgw';
+const OR_KEY='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';
+const OR_URL='https://openrouter.ai/api/v1/chat/completions';
+const OR_MODEL='anthropic/claude-sonnet-4-5';
+const SB_URL='https://wbgmyoolenmbvnfeupkll.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndiZ215b29lbmJtdm5mZXVwa2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MjEyNjcsImV4cCI6MjA5MTI5NzI2N30.i3d4C1p7j1P24UNaa_4GRSq_m3NmvcFzaUvo93FXxgw';
 
-let lesson=null,vocab=[],chatHist=[],chatMode='tutor',curWord='',popData={},sumOpen=true,talking=false;
+let lesson=null,vocab=[],chatHistory=[],chatMode='tutor',currentWord='',popupData={},sumOpen=true,isTalking=false;
+
+const ORH={'Content-Type':'application/json','Authorization':'Bearer '+OR_KEY,'HTTP-Referer':'https://rad-paletas-bf3535.netlify.app','X-Title':'Julia Secretary'};
 
 async function ai(prompt,sys=''){
-  const body={contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:2048,temperature:0.7}};
-  if(sys)body.system_instruction={parts:[{text:sys}]};
-  const r=await fetch(GU,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const msgs=[];
+  if(sys)msgs.push({role:'system',content:sys});
+  msgs.push({role:'user',content:prompt});
+  const r=await fetch(OR_URL,{method:'POST',headers:ORH,body:JSON.stringify({model:OR_MODEL,messages:msgs,max_tokens:2048,temperature:0.7})});
   const d=await r.json();
-  if(d.error)throw new Error(d.error.message);
-  return d.candidates?.[0]?.content?.parts?.[0]?.text||'';
-}
-async function aiChat(msgs,sys){
-  const contents=msgs.map(m=>({role:m.role==='ai'?'model':'user',parts:[{text:m.content}]}));
-  const body={contents,generationConfig:{maxOutputTokens:1024,temperature:0.85}};
-  if(sys)body.system_instruction={parts:[{text:sys}]};
-  const r=await fetch(GU,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-  const d=await r.json();
-  if(d.error)throw new Error(d.error.message);
-  return d.candidates?.[0]?.content?.parts?.[0]?.text||'';
+  if(d.error)throw new Error(d.error.message||JSON.stringify(d.error));
+  return d.choices?.[0]?.message?.content||'';
 }
 
-const H={'apikey':SK,'Authorization':'Bearer '+SK,'Content-Type':'application/json'};
-async function sbGet(t,q=''){const r=await fetch(`${SU}/rest/v1/${t}?${q}&order=created_at.desc`,{headers:H});return r.json();}
-async function sbPost(t,d){const r=await fetch(`${SU}/rest/v1/${t}`,{method:'POST',headers:{...H,'Prefer':'return=representation'},body:JSON.stringify(d)});return r.json();}
-async function sbPatch(t,id,d){await fetch(`${SU}/rest/v1/${t}?id=eq.${id}`,{method:'PATCH',headers:H,body:JSON.stringify(d)});}
-async function sbDel(t,f){await fetch(`${SU}/rest/v1/${t}?${f}`,{method:'DELETE',headers:H});}
+async function aiChat(messages,sys){
+  const msgs=[];
+  if(sys)msgs.push({role:'system',content:sys});
+  messages.forEach(m=>msgs.push({role:m.role==='ai'?'assistant':'user',content:m.content}));
+  const r=await fetch(OR_URL,{method:'POST',headers:ORH,body:JSON.stringify({model:OR_MODEL,messages:msgs,max_tokens:1024,temperature:0.85})});
+  const d=await r.json();
+  if(d.error)throw new Error(d.error.message||JSON.stringify(d.error));
+  return d.choices?.[0]?.message?.content||'';
+}
+
+const SH={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
+async function sbGet(t,q=''){const r=await fetch(`${SB_URL}/rest/v1/${t}?${q}&order=created_at.desc`,{headers:SH});return r.json();}
+async function sbPost(t,d){const r=await fetch(`${SB_URL}/rest/v1/${t}`,{method:'POST',headers:{...SH,'Prefer':'return=representation'},body:JSON.stringify(d)});return r.json();}
+async function sbPatch(t,id,d){await fetch(`${SB_URL}/rest/v1/${t}?id=eq.${id}`,{method:'PATCH',headers:SH,body:JSON.stringify(d)});}
+async function sbDel(t,f){await fetch(`${SB_URL}/rest/v1/${t}?${f}`,{method:'DELETE',headers:SH});}
 
 async function init(){
   try{const ls=await sbGet('lessons','is_active=eq.true&limit=1');if(ls?.length)document.getElementById('resumeBtn').style.display='block';}catch(e){}
@@ -245,15 +225,14 @@ async function handleUpload(e){
   try{
     if(file.name.endsWith('.epub'))text=await readEpub(file);
     else text=await file.text();
-  }catch(err){hideLoad();toast('读取失败');return;}
-  if(!text||text.length<50){hideLoad();toast('内容为空，请试其他格式');return;}
+  }catch(err){hideLoad();toast('读取失败，请重试');return;}
+  if(!text||text.length<50){hideLoad();toast('内容为空');return;}
   await processLesson(text.slice(0,7000),file.name);
 }
 
 async function readEpub(file){
   const buf=await file.arrayBuffer();
-  const dec=new TextDecoder('utf-8',{fatal:false});
-  const raw=dec.decode(new Uint8Array(buf));
+  const raw=new TextDecoder('utf-8',{fatal:false}).decode(new Uint8Array(buf));
   const bodies=[...raw.matchAll(/<body[^>]*>([\s\S]*?)<\/body>/gi)];
   if(bodies.length)return bodies.map(m=>m[1].replace(/<[^>]+>/g,' ').replace(/\s+/g,' ')).join(' ').trim();
   return raw.replace(/<[^>]+>/g,' ').replace(/&[a-z]+;/gi,' ').replace(/\s+/g,' ').trim();
@@ -262,18 +241,18 @@ async function readEpub(file){
 async function processLesson(text,filename){
   showLoad('AI识别科目...');
   try{
-    const metaRaw=await ai(`Analyze this university lesson. Return ONLY valid JSON no markdown:\n{"title":"string","subject":"English name","subject_zh":"中文科目","summary_zh":"2句中文","summary_en":"2 sentence English","key_concepts":["c1","c2","c3","c4"],"core_question":"key question","artworks":[{"artist":"name","work":"title","year":"y"}]}\n\nTEXT:${text.slice(0,2500)}`);
+    const metaRaw=await ai(`Analyze this university lesson. Return ONLY valid JSON, no markdown, no extra text:\n{"title":"string","subject":"English subject name","subject_zh":"科目中文名","summary_zh":"2句中文摘要","summary_en":"2 sentence English summary","key_concepts":["c1","c2","c3","c4"],"core_question":"key question in English","artworks":[{"artist":"name","work":"title","year":"y"}]}\n\nTEXT:\n${text.slice(0,2500)}`);
     const j1=metaRaw.indexOf('{'),j2=metaRaw.lastIndexOf('}');
-    if(j1===-1)throw new Error('解析失败');
+    if(j1===-1)throw new Error('AI返回格式错误，请重试');
     const meta=JSON.parse(metaRaw.slice(j1,j2+1));
     showLoad('整理正文...');
-    const cleaned=await ai(`Reformat this lesson for clean reading. Keep ALL original English. Add ## for sections. Fix broken lines. Return plain text only:\n\n${text.slice(0,5000)}`);
+    const cleaned=await ai(`Reformat this lesson text for clean reading. Keep ALL original English text exactly. Add ## for section headings. Fix broken lines into proper paragraphs. Return plain text only, no JSON, no commentary:\n\n${text.slice(0,5000)}`);
     meta.processed_content=cleaned||text;
     showLoad('保存到云端...');
     const old=await sbGet('lessons','is_active=eq.true');
     if(old?.length)for(const l of old)await sbPatch('lessons',l.id,{is_active:false});
     const saved=await sbPost('lessons',{title:meta.title||filename,subject:`${meta.subject} · ${meta.subject_zh}`,content:meta.processed_content,summary:JSON.stringify(meta),is_active:true});
-    if(!saved?.[0])throw new Error('保存失败');
+    if(!saved?.[0])throw new Error('云端保存失败');
     lesson=saved[0];lesson._meta=meta;vocab=[];
     renderLesson(meta);hideLoad();
     setTimeout(initChat,600);
@@ -290,7 +269,7 @@ async function resumeLesson(){
     vocab=await sbGet('vocab_items',`lesson_id=eq.${lesson.id}`)||[];
     renderLesson(lesson._meta);hideLoad();
     setTimeout(initChat,600);
-  }catch(e){hideLoad();toast('加载失败');}
+  }catch(e){hideLoad();toast('加载失败: '+e.message);}
 }
 
 function renderLesson(meta){
@@ -331,7 +310,7 @@ function renderContent(md){
 }
 
 async function clickWord(e,lo,orig){
-  e.stopPropagation();curWord=lo;
+  e.stopPropagation();currentWord=lo;
   const existing=vocab.find(v=>v.word.toLowerCase()===lo&&v.selected);
   document.getElementById('pWord').textContent=orig;
   document.getElementById('pPh').textContent='';
@@ -340,7 +319,7 @@ async function clickWord(e,lo,orig){
   const addBtn=document.getElementById('pAdd');
   addBtn.textContent=existing?'✓ 已在词单':'+ 加入词单';
   addBtn.className='p-btn'+(existing?' on':'');
-  popData={lo,orig,existing};
+  popupData={lo,orig,existing};
   const rect=e.target.getBoundingClientRect();
   const popup=document.getElementById('popup');
   popup.style.left=Math.max(8,Math.min(rect.left,window.innerWidth-260))+'px';
@@ -351,12 +330,12 @@ async function clickWord(e,lo,orig){
 
 async function fetchDef(lo,orig){
   try{
-    const raw=await ai(`Word: "${orig}" context: ${lesson?.subject||'art'}. ONLY JSON: {"phonetic":"/x/ British","zh":"中文2-4字","synonyms":"w1, w2","type":"noun"}`);
+    const raw=await ai(`Word: "${orig}" used in: ${lesson?.subject||'art'}. Return ONLY this JSON with no other text: {"phonetic":"/pronunciation/ British IPA","zh":"中文释义2-4字","synonyms":"synonym1, synonym2","type":"noun"}`);
     const j1=raw.indexOf('{'),j2=raw.lastIndexOf('}');
     if(j1===-1)return;
     const def=JSON.parse(raw.slice(j1,j2+1));
-    popData.def=def;
-    if(curWord===lo&&document.getElementById('popup').classList.contains('on')){
+    popupData.def=def;
+    if(currentWord===lo&&document.getElementById('popup').classList.contains('on')){
       document.getElementById('pPh').textContent=def.phonetic||'';
       document.getElementById('pZh').textContent=def.zh||orig;
       document.getElementById('pSyn').textContent=def.synonyms?'近义 · '+def.synonyms:'';
@@ -365,7 +344,7 @@ async function fetchDef(lo,orig){
 }
 
 async function doAdd(){
-  const{lo,orig,existing,def}=popData;
+  const{lo,orig,existing,def}=popupData;
   if(existing){
     await sbDel('vocab_items',`id=eq.${existing.id}`);
     vocab=vocab.filter(v=>v.id!==existing.id);toast('已移除');
@@ -409,9 +388,9 @@ async function rmWord(id){
 
 async function endLesson(){
   if(!lesson)return;
-  if(!confirm('结束本课？'))return;
+  if(!confirm('结束本课？词汇记录将保留。'))return;
   await sbPatch('lessons',lesson.id,{is_active:false});
-  lesson=null;vocab=[];chatHist=[];
+  lesson=null;vocab=[];chatHistory=[];
   document.getElementById('lessonView').style.display='none';
   document.getElementById('uploadScreen').style.display='flex';
   document.getElementById('subTag').textContent='— 上传课程文件 —';
@@ -430,19 +409,19 @@ function speakWord(w){
 
 let rIdx=0,rSents=[];
 function toggleRead(){
-  if(talking){stopRead();return;}talking=true;
+  if(isTalking){stopRead();return;}isTalking=true;
   document.getElementById('readBtn').textContent='■ 朗读中';document.getElementById('readBtn').classList.add('on');
   const text=document.getElementById('contentText').innerText;
   rSents=text.match(/[^.!?]+[.!?]+/g)||[text];rIdx=0;readNext();
 }
 function readNext(){
-  if(!talking||rIdx>=rSents.length){stopRead();return;}
+  if(!isTalking||rIdx>=rSents.length){stopRead();return;}
   const u=new SpeechSynthesisUtterance(rSents[rIdx]);u.lang='en-GB';u.rate=0.8;
   const vs=speechSynthesis.getVoices();
   const gb=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.name.includes('Daniel'));
   if(gb)u.voice=gb;u.onend=()=>{rIdx++;readNext();};speechSynthesis.speak(u);
 }
-function stopRead(){talking=false;speechSynthesis.cancel();document.getElementById('readBtn').textContent='▶ 朗读';document.getElementById('readBtn').classList.remove('on');}
+function stopRead(){isTalking=false;speechSynthesis.cancel();document.getElementById('readBtn').textContent='▶ 朗读';document.getElementById('readBtn').classList.remove('on');}
 setTimeout(()=>speechSynthesis.getVoices(),300);
 
 function toggleChat(){
@@ -450,42 +429,109 @@ function toggleChat(){
   const on=p.classList.toggle('on');
   document.getElementById('chatHbtn').classList.toggle('on',on);
   if(window.innerWidth>600)r.classList.toggle('pushed',on);
-  if(on&&!chatHist.length)initChat();
+  if(on&&!chatHistory.length)initChat();
 }
 
 function setMode(m){
   chatMode=m;document.querySelectorAll('.cp-mode').forEach(b=>b.classList.remove('on'));
   document.getElementById('cm-'+m).classList.add('on');
-  chatHist=[];document.getElementById('cpMsgs').innerHTML='';initChat();
+  chatHistory=[];document.getElementById('cpMsgs').innerHTML='';initChat();
 }
 
 function getSys(){
   const subj=lesson?.subject||'art and philosophy';
   let ctx='';
-  if(lesson?._meta){const m=lesson._meta;ctx=`Lesson:"${m.title}". Concepts:${(m.key_concepts||[]).join(',')}. Question:${m.core_question||''}`;}
-  const rw=vocab.slice(-6).map(v=>v.word).join(',')||'aesthetics,phenomenology';
-  const prof=`STUDENT: Chinese girl, Painting & Visual Arts BA at NABA Milan Year 1. B1 English (reading near B2, speaking very weak). ADHD. Introverted, shy, anxious. Goal: B2/C1 oral exam in 2 years. Now studying: ${subj}. ${ctx}. Recent vocab: ${rw}.`;
+  if(lesson?._meta){const m=lesson._meta;ctx=`当前课程:"${m.title}"。核心概念:${(m.key_concepts||[]).join(', ')}。核心问题:${m.core_question||''}`;}
+  const rw=vocab.slice(-8).map(v=>v.word).join(', ')||'aesthetics, phenomenology';
+
+  const STUDENT=`【学生档案】
+姓名：Julia（朱砚桐），中国女生，在米兰NABA学习绘画与视觉艺术本科一年级。
+英语水平：B1（读写接近B2，口语听力很弱）。
+特征：ADHD，注意力容易分散，焦虑，内向害羞，不喜欢开口说英语。
+目标：2年内通过B2/C1口语考试，能用英语自信讨论艺术作品和理论。
+当前科目：${subj}。${ctx}
+最近学过的词汇：${rw}。
+重要：她容易受挫，需要鼓励，绝不能让她感到被评判或嘲笑。`;
+
   const ps={
-    tutor:`${prof}\nYOU: Passionate art/philosophy professor, fluent Chinese+English.\n- Max 4 sentences. ADHD = no walls of text.\n- Answer Chinese first, English terms in brackets: 现象学[phenomenology]\n- One analogy or artwork example per answer\n- End with ONE curiosity question\n- Never say "it's simple"\nOpen: Ask what confused or interested her today.`,
-    oral:`${prof}\nYOU: Warm oral coach for shy Chinese art students.\nFLOW: 1)Warm up casual 2-3 exchanges 2)Bridge to art 3)Practice one concept 4)Exam prep only if relaxed\nRULES: Never interrupt. Correct max 2 errors AFTER she finishes. If Chinese: encourage one English sentence gently. Celebrate every attempt.\nOpen: Greet warmly, ask something easy about her week.`,
-    write:`${prof}\nYOU: Writing coach, tiny wins one sentence at a time.\nSTART with ONE task (pick easiest): a)"Finish: In this lesson art means ___" b)"Describe one artwork in 8 words" c)"One English sentence about Milan today"\nCORRECTION: ✗You wrote:[text] ✓Try:[corrected] 💡Because:[one reason] →Next:[harder task]\nIf Chinese: translate it, say "read this aloud — counts as practice".\nOpen: Give the easiest task warmly.`,
-    free:`${prof}\nYOU: Smart funny friend in Milan, mix Chinese+English naturally.\nShort replies. Explain English words in brackets casually. Be genuinely curious.\nOpen: Share something surprising about art or Milan, ask what's on her mind.`
+    tutor:`${STUDENT}
+
+【你的角色】热情博学的艺术哲学教授，中英文都很流利，真心热爱自己教的内容。
+
+【规则】
+- 每次回复最多4句话。ADHD特性意味着长篇大论会直接让她放弃阅读。
+- 优先用中文回答，关键英文术语加括号标注，例如：现象学[phenomenology]
+- 每次回答包含一个生动的比喻或具体艺术作品举例
+- 回答结尾提一个让她好奇的问题，引导她继续思考
+- 她问任何题外话（科学、生活、八卦）都认真回答——好奇心比课程重要
+- 绝不说"这很简单"或"显然"
+- 开场：询问今天课程里让她最困惑或最感兴趣的部分`,
+
+    oral:`${STUDENT}
+
+【你的角色】专门帮助害羞中国艺术生通过口语考试的暖心教练，见过太多和Julia一样的学生，都成功了。
+
+【课程结构，每次对话按顺序推进】
+1. 热身（2-3轮）：聊她今天做了什么、在米兰看到什么、吃了什么——零压力，不涉及艺术理论
+2. 过渡（2-3轮）：把她的回答自然地和艺术联系起来
+3. 练习（主要部分）：用今天课程的一个概念提问，以对话方式而非考试方式
+4. 模拟（可选）：只有她明显放松了才进行一道真实考试题
+
+【纠正规则】
+- 绝不打断。等她完整说完。
+- 每次最多指出1-2个错误，在她回答之后：「说得好！有一点小建议：把[错误]换成[正确]，因为…」
+- 她用中文回答时：「我完全听懂了！能不能试着用英文说第一句？我帮你。」
+- 为每一次英文尝试喝彩，哪怕只有三个词
+- 开场：用轻松愉快的方式问她最近的生活`,
+
+    write:`${STUDENT}
+
+【你的角色】把无数「我完全不会写英文」的学生变成自信写作者的写作教练。秘诀：极小的成功，一句话一句话来。
+
+【每次课程流程】
+给她一个极小任务（从最简单的开始）：
+a）「完成这句话：In this lesson, I think art means ___」
+b）「用恰好8个英文单词描述今天课程里的一件艺术品」
+c）「写一句话：今天在米兰你注意到了什么？」（任何内容都行）
+
+【批改格式（每次都用这个）】
+✗ 你写的：[她的原文]
+✓ 建议改成：[修改版]
+💡 原因：[一句话解释]
+→ 下一步：[稍微难一点点的任务]
+
+她用中文写时：帮她翻译成简单英文，然后说「把这句话大声读出来——这也算练习」。
+开场：用最轻松的语气给她一个任务，让她感觉「这我肯定能做到」。`,
+
+    free:`${STUDENT}
+
+【你的角色】她在米兰认识的聪明有趣的朋友，你们自然地混着中英文聊天。
+
+- 回复简短（3-4句）
+- 中英混搭很自然：「今天去看了个展览，honestly it was so 震撼[overwhelming]…」
+- 用到有趣的英文词时顺带解释：括号里加中文
+- 真心好奇她的生活，问有意思的问题
+- 开场：分享一个关于艺术或米兰的有趣冷知识，然后问她最近在想什么`
   };
   return ps[chatMode];
 }
 
 async function initChat(){
   addDots();
-  try{const r=await aiChat([{role:'user',content:'Start.'}],getSys());removeDots();addMsg('ai',r);chatHist.push({role:'ai',content:r});}
-  catch(e){removeDots();addMsg('ai','连接失败: '+e.message);}
+  try{
+    const r=await aiChat([{role:'user',content:'开始吧。'}],getSys());
+    removeDots();addMsg('ai',r);chatHistory.push({role:'ai',content:r});
+  }catch(e){removeDots();addMsg('ai','连接失败: '+e.message);}
 }
 
 async function sendMsg(){
   const inp=document.getElementById('cpIn');const txt=inp.value.trim();if(!txt)return;
   inp.value='';inp.style.height='auto';
-  addMsg('user',txt);chatHist.push({role:'user',content:txt});addDots();
-  try{const r=await aiChat(chatHist.slice(-16),getSys());removeDots();addMsg('ai',r);chatHist.push({role:'ai',content:r});}
-  catch(e){removeDots();addMsg('ai','出错: '+e.message);}
+  addMsg('user',txt);chatHistory.push({role:'user',content:txt});addDots();
+  try{
+    const r=await aiChat(chatHistory.slice(-16),getSys());
+    removeDots();addMsg('ai',r);chatHistory.push({role:'ai',content:r});
+  }catch(e){removeDots();addMsg('ai','出错: '+e.message);}
 }
 
 function addMsg(role,text){
@@ -501,11 +547,16 @@ function addDots(){
 }
 function removeDots(){document.getElementById('dots')?.remove();}
 
-function toggleSum(){sumOpen=!sumOpen;document.getElementById('sumBody').style.display=sumOpen?'block':'none';document.getElementById('artworks').style.display=sumOpen?'flex':'none';document.getElementById('sumTog').textContent=sumOpen?'收起':'展开';}
+function toggleSum(){
+  sumOpen=!sumOpen;
+  document.getElementById('sumBody').style.display=sumOpen?'block':'none';
+  document.getElementById('artworks').style.display=sumOpen?'flex':'none';
+  document.getElementById('sumTog').textContent=sumOpen?'收起':'展开';
+}
 
 function showLoad(t){document.getElementById('loadTxt').textContent=t;document.getElementById('loading').classList.add('on');}
 function hideLoad(){document.getElementById('loading').classList.remove('on');}
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2200);}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2500);}
 
 document.addEventListener('click',e=>{
   const p=document.getElementById('popup');
