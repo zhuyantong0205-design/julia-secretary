@@ -131,13 +131,15 @@ html,body{height:100%;overflow:hidden;background:var(--bk);color:var(--wh);font-
     <div class="uscreen" id="uscreen">
       <div><div class="u-mk">Julia's Secretary No.1</div><div class="u-ti">上传今日<br>课堂讲义</div></div>
       <div class="u-de">支持 ePub · TXT<br>AI自动识别科目整理重点<br>数据永久保存随时继续</div>
-      <label class="u-zo" for="fi">
-        <div class="u-zi">↑</div>
-        <div class="u-zt">点击选择文件</div>
-        <div class="u-zs">NABA课程平台下载的ePub</div>
-      </label>
-      <input type="file" id="fi" accept=".epub,.txt,.pdf,.md,.jpg,.jpeg,.png,.mp4,.mov" onchange="handleUpload(event)">
-      <button class="rbtn" id="resumeBtn" style="display:none" onclick="resumeLesson()">继续上次课程 ↗</button>
+      <div class="u-zo" onclick="document.getElementById('fi').click()">
+  <div class="u-zi">↑</div>
+  <div class="u-zt">点击选择文件</div>
+  <div class="u-zs">ePub · TXT · 图片 · 视频</div>
+</div>
+<input type="file" id="fi" accept=".epub,.txt,.pdf,.md,.jpg,.jpeg,.png,.mp4,.mov" style="display:none" onchange="handleUpload(event)">
+<textarea id="textInput" placeholder="或直接粘贴文字内容..." style="width:100%;max-width:280px;background:none;border:1px solid #222;color:#f5f5f3;padding:10px;font-size:12px;font-family:'DM Sans',sans-serif;resize:none;height:80px;margin-top:8px;outline:none" onkeydown="if(event.key==='Enter'&&event.shiftKey){event.preventDefault();handleTextInput()}"></textarea>
+<button onclick="handleTextInput()" style="font-size:11px;color:#6a6a6a;background:none;border:1px solid #222;padding:6px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;letter-spacing:.08em">分析文字内容 →</button>
+  <button class="rbtn" id="resumeBtn" style="display:none" onclick="resumeLesson()">继续上次课程 ↗</button>
     </div>
     <div id="lv" style="display:none">
       <div class="sw">
@@ -245,6 +247,11 @@ async function sbPatch(t,id,d){await fetch(SBU+'/rest/v1/'+t+'?id=eq.'+id,{metho
 async function sbDel(t,f){await fetch(SBU+'/rest/v1/'+t+'?'+f,{method:'DELETE',headers:SBH});}
 async function init(){try{const ls=await sbGet('lessons','is_active=eq.true&limit=1');if(ls&&ls.length)document.getElementById('resumeBtn').style.display='block';}catch(e){}}
 init();
+function handleTextInput(){
+  var txt=document.getElementById('textInput').value.trim();
+  if(!txt||txt.length<10){toast('请先输入内容');return;}
+  processLesson(txt.slice(0,3000),'手动输入');
+}
 async function handleUpload(e){
   const file=e.target.files[0];if(!file)return;
   showL('读取文件: '+file.name);
