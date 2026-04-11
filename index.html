@@ -194,19 +194,50 @@ html,body{height:100%;overflow:hidden;background:var(--bk);color:var(--wh);font-
 <div class="lov" id="lov"><div class="sp"></div><div class="lt" id="lt">分析中...</div></div>
 <div class="tst" id="tst"></div>
 <script>
+const GK='AIzaSyCNiyPe-dNA8Jty6S1cNMxlt1xaVg_jM_o';
+const GU='https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+GK;
 const ORK='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';
 const ORU='https://openrouter.ai/api/v1/chat/completions';
-const ORM='anthropic/claude-sonnet-4-5';
 const SBU='https://wbgmyoolenmbvnfeupkll.supabase.co';
 const SBK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndiZ215b29lbmJtdm5mZXVwa2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MjEyNjcsImV4cCI6MjA5MTI5NzI2N30.i3d4C1p7j1P24UNaa_4GRSq_m3NmvcFzaUvo93FXxgw';
 let lesson=null,vocab=[],chatHist=[],chatMode='tutor',curW='',popD={},sumOpen=true,talking=false;
 const ORH={'Content-Type':'application/json','Authorization':'Bearer '+ORK,'HTTP-Referer':'https://rad-paletas-bf3535.netlify.app','X-Title':'JuliaSecretary'};
 const SBH={'apikey':SBK,'Authorization':'Bearer '+SBK,'Content-Type':'application/json'};
+const FREE_MODELS=['mistralai/mistral-7b-instruct:free','meta-llama/llama-3.3-70b-instruct:free','google/gemini-2.0-flash-exp:free'];
+let modelIdx=0;
 async function callAI(msgs){
-  const r=await fetch(ORU,{method:'POST',headers:ORH,body:JSON.stringify({model:ORM,messages:msgs,max_tokens:1500,temperature:0.7})});
-  const d=await r.json();
-  if(d.error)throw new Error(d.error.message||'AI错误');
-  return d.choices?.[0]?.message?.content||'';
+  // 先试Gemini
+  try{
+    var sys=msgs.find(function(m){return m.role==='system';});
+    var userMsgs=msgs.filter(function(m){return m.role!=='system';});
+    var contents=userMsgs.map(function(m){return{role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]};});
+    var body={contents:contents,generationConfig:{maxOutputTokens:800,temperature:0.7}};
+    if(sys)body.system_instruction={parts:[{text:sys.content}]};
+    var r=await fetch(GU,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    var d=await r.json();
+    if(d.error)throw new Error(d.error.message);
+    var result=d.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    if(result)return result;
+    throw new Error('empty');
+  }catch(e){
+    console.log('Gemini失败:'+e.message+' 切换OpenRouter...');
+  }
+  // Gemini失败，轮换OpenRouter免费模型
+  for(var attempt=0;attempt<FREE_MODELS.length;attempt++){
+    var model=FREE_MODELS[modelIdx%FREE_MODELS.length];
+    modelIdx++;
+    try{
+      var r2=await fetch(ORU,{method:'POST',headers:ORH,body:JSON.stringify({model:model,messages:msgs,max_tokens:800,temperature:0.7})});
+      var d2=await r2.json();
+      if(d2.error)throw new Error(d2.error.message);
+      var result2=d2.choices?.[0]?.message?.content||'';
+      if(result2)return result2;
+      throw new Error('empty');
+    }catch(e2){
+      console.log(model+'失败:'+e2.message);
+    }
+  }
+  throw new Error('所有模型均不可用，请稍后重试');
 }
 async function sbGet(t,q=''){const r=await fetch(SBU+'/rest/v1/'+t+'?'+q+'&order=created_at.desc',{headers:SBH});return r.json();}
 async function sbPost(t,d){const r=await fetch(SBU+'/rest/v1/'+t,{method:'POST',headers:{...SBH,'Prefer':'return=representation'},body:JSON.stringify(d)});return r.json();}
@@ -219,7 +250,12 @@ async function handleUpload(e){
   showL('读取文件: '+file.name);
   let text='';
   toast('文件: '+file.name+' 大小:'+file.size+'bytes');
-  try{if(file.name.endsWith('.epub')){text=await readEpub(file);}else{text=await file.text();}}
+  try{
+  if(file.name.endsWith('.epub')){text=await readEpub(file);}
+  else if(file.type.startsWith('image/')){text='[图片文件: '+file.name+'] 请用文字描述这张图片的内容。';}
+  else if(file.type.startsWith('video/')){text='[视频文件: '+file.name+'] 请描述你想从这个视频中学习什么内容。';}
+  else{text=await file.text();}
+}
   catch(err){hideL();toast('读取失败: '+err.message);return;}
   if(!text||text.length<50){hideL();toast('内容为空，请检查文件');return;}
   toast('读取成功，开始分析...');
