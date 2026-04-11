@@ -18,7 +18,7 @@ html,body{height:100%;overflow:hidden;background:var(--bk);color:var(--wh);font-
 .body{display:flex;flex:1;overflow:hidden;height:calc(100vh - 57px)}
 .rd{flex:1;overflow-y:auto;display:flex;flex-direction:column}
 .rd.pushed{margin-right:300px}
-.uscreen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;gap:18px}
+.uscreen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;gap:14px}
 .u-mk{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--g4)}
 .u-ti{font-family:'EB Garamond',serif;font-size:34px;color:var(--wh);line-height:1.2}
 .u-de{font-size:12px;color:var(--g4);line-height:1.9;max-width:260px}
@@ -30,6 +30,10 @@ html,body{height:100%;overflow:hidden;background:var(--bk);color:var(--wh);font-
 #fi{display:none}
 .rbtn{font-size:12px;color:var(--g4);background:none;border:1px solid var(--bd);padding:8px 20px;cursor:pointer;letter-spacing:.1em;transition:all .15s;font-family:'DM Sans',sans-serif}
 .rbtn:hover{color:var(--wh);border-color:var(--g3)}
+.txtarea{width:100%;max-width:280px;background:none;border:1px solid var(--bd);color:var(--wh);padding:10px;font-size:12px;font-family:'DM Sans',sans-serif;resize:none;height:72px;outline:none;margin-top:4px}
+.txtarea::placeholder{color:var(--g4)}
+.anabtn{font-size:11px;color:var(--g4);background:none;border:1px solid var(--bd);padding:6px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:.08em;transition:all .15s}
+.anabtn:hover{color:var(--wh);border-color:var(--g3)}
 .sw{border-bottom:1px solid var(--bd)}
 .sh{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer}
 .sl{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--g4)}
@@ -114,6 +118,15 @@ html,body{height:100%;overflow:hidden;background:var(--bk);color:var(--wh);font-
 .lt{font-size:12px;color:var(--g4);letter-spacing:.1em;text-align:center;max-width:220px;line-height:1.8}
 .tst{position:fixed;bottom:72px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--g1);border:1px solid var(--g3);color:var(--g5);padding:8px 18px;font-size:12px;z-index:500;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;letter-spacing:.06em}
 .tst.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.key-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:400;display:flex;align-items:center;justify-content:center}
+.key-box{background:var(--g1);border:1px solid var(--bd);padding:28px 24px;width:90%;max-width:340px;display:flex;flex-direction:column;gap:14px}
+.key-title{font-family:'EB Garamond',serif;font-size:20px}
+.key-sub{font-size:12px;color:var(--g4);line-height:1.8}
+.key-link{color:var(--g5);font-size:11px;letter-spacing:.06em}
+.key-input{background:none;border:1px solid var(--bd);color:var(--wh);padding:10px 12px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;width:100%}
+.key-input:focus{border-color:var(--g3)}
+.key-save{padding:10px;background:var(--wh);color:var(--bk);font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;letter-spacing:.06em;transition:opacity .15s}
+.key-save:hover{opacity:.85}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--g2)}
 @media(max-width:600px){.cp{width:100%}.rd.pushed{margin-right:0}}
 </style>
@@ -124,22 +137,23 @@ html,body{height:100%;overflow:hidden;background:var(--bk);color:var(--wh);font-
   <div class="hdr-r">
     <button class="hbtn" onclick="toggleVdr()">词</button>
     <button class="hbtn" id="chatBtn" onclick="toggleChat()">助</button>
+    <button class="hbtn" onclick="showKeySetup()" title="设置API Key">⚙</button>
   </div>
 </div>
 <div class="body">
   <div class="rd" id="rd">
     <div class="uscreen" id="uscreen">
       <div><div class="u-mk">Julia's Secretary No.1</div><div class="u-ti">上传今日<br>课堂讲义</div></div>
-      <div class="u-de">支持 ePub · TXT<br>AI自动识别科目整理重点<br>数据永久保存随时继续</div>
+      <div class="u-de">支持 ePub · TXT · 图片 · 视频<br>AI自动识别科目整理重点<br>数据永久保存随时继续</div>
       <div class="u-zo" onclick="document.getElementById('fi').click()">
-  <div class="u-zi">↑</div>
-  <div class="u-zt">点击选择文件</div>
-  <div class="u-zs">ePub · TXT · 图片 · 视频</div>
-</div>
-<input type="file" id="fi" accept=".epub,.txt,.pdf,.md,.jpg,.jpeg,.png,.mp4,.mov" style="display:none" onchange="handleUpload(event)">
-<textarea id="textInput" placeholder="或直接粘贴文字内容..." style="width:100%;max-width:280px;background:none;border:1px solid #222;color:#f5f5f3;padding:10px;font-size:12px;font-family:'DM Sans',sans-serif;resize:none;height:80px;margin-top:8px;outline:none" onkeydown="if(event.key==='Enter'&&event.shiftKey){event.preventDefault();handleTextInput()}"></textarea>
-<button onclick="handleTextInput()" style="font-size:11px;color:#6a6a6a;background:none;border:1px solid #222;padding:6px 16px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:4px;letter-spacing:.08em">分析文字内容 →</button>
-  <button class="rbtn" id="resumeBtn" style="display:none" onclick="resumeLesson()">继续上次课程 ↗</button>
+        <div class="u-zi">↑</div>
+        <div class="u-zt">点击选择文件</div>
+        <div class="u-zs">ePub · TXT · 图片 · 视频</div>
+      </div>
+      <input type="file" id="fi" accept=".epub,.txt,.pdf,.md,.jpg,.jpeg,.png,.mp4,.mov" style="display:none" onchange="handleUpload(event)">
+      <textarea class="txtarea" id="textInput" placeholder="或直接粘贴文字内容..."></textarea>
+      <button class="anabtn" onclick="handleTextInput()">分析文字内容 →</button>
+      <button class="rbtn" id="resumeBtn" style="display:none" onclick="resumeLesson()">继续上次课程 ↗</button>
     </div>
     <div id="lv" style="display:none">
       <div class="sw">
@@ -195,133 +209,139 @@ html,body{height:100%;overflow:hidden;background:var(--bk);color:var(--wh);font-
 </div>
 <div class="lov" id="lov"><div class="sp"></div><div class="lt" id="lt">分析中...</div></div>
 <div class="tst" id="tst"></div>
+<div class="key-overlay" id="keyOverlay" style="display:none">
+  <div class="key-box">
+    <div class="key-title">设置 API Key</div>
+    <div class="key-sub">
+      前往 <a href="https://openrouter.ai/keys" target="_blank" class="key-link">openrouter.ai/keys</a> 免费注册获取Key<br>
+      Key保存在你的设备本地，不会上传到任何服务器
+    </div>
+    <input class="key-input" id="keyInput" type="password" placeholder="sk-or-v1-...">
+    <button class="key-save" onclick="saveKey()">保存并开始使用</button>
+  </div>
+</div>
 <script>
-const GK='AIzaSyAfqr1KfSuBY06uca8YE3Sn5SHK_3e7dbI';
-const GU='https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+GK;
-const ORK='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';
 const ORU='https://openrouter.ai/api/v1/chat/completions';
+const FREE_MODELS=['meta-llama/llama-3.3-70b-instruct:free','mistralai/mistral-7b-instruct:free','google/gemini-2.0-flash-exp:free'];
 const SBU='https://wbgmyoolenmbvnfeupkll.supabase.co';
 const SBK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndiZ215b29lbmJtdm5mZXVwa2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MjEyNjcsImV4cCI6MjA5MTI5NzI2N30.i3d4C1p7j1P24UNaa_4GRSq_m3NmvcFzaUvo93FXxgw';
-let lesson=null,vocab=[],chatHist=[],chatMode='tutor',curW='',popD={},sumOpen=true,talking=false;
-const ORH={'Content-Type':'application/json','Authorization':'Bearer '+ORK,'HTTP-Referer':'https://rad-paletas-bf3535.netlify.app','X-Title':'JuliaSecretary'};
+let lesson=null,vocab=[],chatHist=[],chatMode='tutor',curW='',popD={},sumOpen=true,talking=false,modelIdx=0;
 const SBH={'apikey':SBK,'Authorization':'Bearer '+SBK,'Content-Type':'application/json'};
-const FREE_MODELS=['mistralai/mistral-7b-instruct:free','meta-llama/llama-3.3-70b-instruct:free','google/gemini-2.0-flash-exp:free'];
-let modelIdx=0;
+
+function getKey(){return localStorage.getItem('or_key')||'';}
+function saveKey(){
+  var k=document.getElementById('keyInput').value.trim();
+  if(!k){toast('请输入Key');return;}
+  localStorage.setItem('or_key',k);
+  document.getElementById('keyOverlay').style.display='none';
+  toast('Key已保存 ✓');
+  init();
+}
+function showKeySetup(){
+  var k=getKey();
+  if(k)document.getElementById('keyInput').value=k;
+  document.getElementById('keyOverlay').style.display='flex';
+}
+
 async function callAI(msgs){
-  // 先试Gemini
-  try{
-    var sys=msgs.find(function(m){return m.role==='system';});
-    var userMsgs=msgs.filter(function(m){return m.role!=='system';});
-    var contents=userMsgs.map(function(m){return{role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]};});
-    var body={contents:contents,generationConfig:{maxOutputTokens:800,temperature:0.7}};
-    if(sys)body.system_instruction={parts:[{text:sys.content}]};
-    var r=await fetch(GU,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-    var d=await r.json();
-    if(d.error)throw new Error(d.error.message);
-    var result=d.candidates?.[0]?.content?.parts?.[0]?.text||'';
-    if(result)return result;
-    throw new Error('empty');
-  }catch(e){
-    console.log('Gemini失败:'+e.message+' 切换OpenRouter...');
-  }
-  // Gemini失败，轮换OpenRouter免费模型
-  for(var attempt=0;attempt<FREE_MODELS.length;attempt++){
+  var key=getKey();
+  if(!key){showKeySetup();throw new Error('请先设置API Key');}
+  var h={'Content-Type':'application/json','Authorization':'Bearer '+key,'HTTP-Referer':'https://rad-paletas-bf3535.netlify.app','X-Title':'JuliaSecretary'};
+  for(var i=0;i<FREE_MODELS.length;i++){
     var model=FREE_MODELS[modelIdx%FREE_MODELS.length];
     modelIdx++;
     try{
-      var r2=await fetch(ORU,{method:'POST',headers:ORH,body:JSON.stringify({model:model,messages:msgs,max_tokens:800,temperature:0.7})});
-      var d2=await r2.json();
-      if(d2.error)throw new Error(d2.error.message);
-      var result2=d2.choices?.[0]?.message?.content||'';
-      if(result2)return result2;
-      throw new Error('empty');
-    }catch(e2){
-      console.log(model+'失败:'+e2.message);
-    }
+      var r=await fetch(ORU,{method:'POST',headers:h,body:JSON.stringify({model:model,messages:msgs,max_tokens:800,temperature:0.7})});
+      var d=await r.json();
+      if(d.error)throw new Error(d.error.message);
+      var result=d.choices?.[0]?.message?.content||'';
+      if(result)return result;
+    }catch(e){console.log(model+'失败:'+e.message);}
   }
-  throw new Error('所有模型均不可用，请稍后重试');
+  throw new Error('所有模型均不可用，请检查Key或稍后重试');
 }
+
 async function sbGet(t,q=''){const r=await fetch(SBU+'/rest/v1/'+t+'?'+q+'&order=created_at.desc',{headers:SBH});return r.json();}
 async function sbPost(t,d){const r=await fetch(SBU+'/rest/v1/'+t,{method:'POST',headers:{...SBH,'Prefer':'return=representation'},body:JSON.stringify(d)});return r.json();}
 async function sbPatch(t,id,d){await fetch(SBU+'/rest/v1/'+t+'?id=eq.'+id,{method:'PATCH',headers:SBH,body:JSON.stringify(d)});}
 async function sbDel(t,f){await fetch(SBU+'/rest/v1/'+t+'?'+f,{method:'DELETE',headers:SBH});}
-async function init(){try{const ls=await sbGet('lessons','is_active=eq.true&limit=1');if(ls&&ls.length)document.getElementById('resumeBtn').style.display='block';}catch(e){}}
+
+async function init(){
+  if(!getKey()){showKeySetup();return;}
+  try{const ls=await sbGet('lessons','is_active=eq.true&limit=1');if(ls&&ls.length)document.getElementById('resumeBtn').style.display='block';}catch(e){}
+}
 init();
+
 function handleTextInput(){
   var txt=document.getElementById('textInput').value.trim();
   if(!txt||txt.length<10){toast('请先输入内容');return;}
+  if(!getKey()){showKeySetup();return;}
   processLesson(txt.slice(0,3000),'手动输入');
 }
+
 async function handleUpload(e){
   const file=e.target.files[0];if(!file)return;
+  if(!getKey()){showKeySetup();return;}
   showL('读取文件: '+file.name);
   let text='';
-  toast('文件: '+file.name+' 大小:'+file.size+'bytes');
   try{
-  if(file.name.endsWith('.epub')){text=await readEpub(file);}
-  else if(file.type.startsWith('image/')){text='[图片文件: '+file.name+'] 请用文字描述这张图片的内容。';}
-  else if(file.type.startsWith('video/')){text='[视频文件: '+file.name+'] 请描述你想从这个视频中学习什么内容。';}
-  else{text=await file.text();}
+    if(file.name.endsWith('.epub'))text=await readEpub(file);
+    else if(file.type.startsWith('image/'))text='[图片: '+file.name+'] 这是一张图片文件，请分析图片可能包含的艺术相关内容。';
+    else if(file.type.startsWith('video/'))text='[视频: '+file.name+'] 这是一个视频文件，请描述可能的学习内容。';
+    else text=await file.text();
+  }catch(err){hideL();toast('读取失败: '+err.message);return;}
+  if(!text||text.length<10){hideL();toast('内容为空');return;}
+  await processLesson(text.slice(0,3000),file.name);
 }
-  catch(err){hideL();toast('读取失败: '+err.message);return;}
-  if(!text||text.length<50){hideL();toast('内容为空，请检查文件');return;}
-  toast('读取成功，开始分析...');
-  await processLesson(text.slice(0,6000),file.name);
-}
+
 async function readEpub(file){
-  try{
-    const buf=await file.arrayBuffer();
-    const raw=new TextDecoder('utf-8',{fatal:false}).decode(new Uint8Array(buf));
-    const bodies=[...raw.matchAll(/<body[^>]*>([\s\S]*?)<\/body>/gi)];
-    if(bodies.length){
-      const text=bodies.map(m=>m[1].replace(/<[^>]+>/g,' ').replace(/\s+/g,' ')).join(' ').trim();
-      if(text.length>100)return text;
-    }
-    const text2=raw.replace(/<[^>]+>/g,' ').replace(/&[a-z]+;/gi,' ').replace(/\s+/g,' ').trim();
-    if(text2.length>100)return text2;
-    throw new Error('无法提取文本');
-  }catch(e){
-    throw new Error('epub读取失败: '+e.message);
-  }
+  const buf=await file.arrayBuffer();
+  const raw=new TextDecoder('utf-8',{fatal:false}).decode(new Uint8Array(buf));
+  const bodies=[...raw.matchAll(/<body[^>]*>([\s\S]*?)<\/body>/gi)];
+  if(bodies.length){const t=bodies.map(m=>m[1].replace(/<[^>]+>/g,' ').replace(/\s+/g,' ')).join(' ').trim();if(t.length>50)return t;}
+  return raw.replace(/<[^>]+>/g,' ').replace(/&[a-z]+;/gi,' ').replace(/\s+/g,' ').trim();
 }
+
 async function processLesson(text,filename){
   showL('AI分析科目...');
   try{
     const metaRaw=await callAI([
-      {role:'system',content:'You are a university lesson analyzer. Return ONLY valid JSON, no markdown, no extra text.'},
-      {role:'user',content:'Analyze this lesson and return JSON:\n{"title":"string","subject":"English name","subject_zh":"中文科目","summary_zh":"2句中文摘要","summary_en":"2 sentence English","key_concepts":["c1","c2","c3","c4"],"core_question":"key question","artworks":[{"artist":"name","work":"title","year":"y"}]}\n\nTEXT:\n'+text.slice(0,2000)}
+      {role:'system',content:'University lesson analyzer. Return ONLY valid JSON no markdown.'},
+      {role:'user',content:'Analyze and return JSON:\n{"title":"string","subject":"English","subject_zh":"中文","summary_zh":"2句中文","summary_en":"2 sentence English","key_concepts":["c1","c2","c3","c4"],"core_question":"question","artworks":[{"artist":"name","work":"title","year":"y"}]}\n\nTEXT:\n'+text.slice(0,1500)}
     ]);
     const j1=metaRaw.indexOf('{'),j2=metaRaw.lastIndexOf('}');
-    if(j1===-1)throw new Error('AI返回格式错误');
+    if(j1===-1)throw new Error('格式错误');
     const meta=JSON.parse(metaRaw.slice(j1,j2+1));
-    showL('整理正文格式...');
+    showL('整理正文...');
     const cleaned=await callAI([
-      {role:'system',content:'Reformat lesson text for clean reading. Keep ALL original English. Add ## for section headings. Fix broken lines. Return plain text only.'},
-      {role:'user',content:text.slice(0,5000)}
+      {role:'system',content:'Reformat text for reading. Keep original English. Add ## headings. Return plain text only.'},
+      {role:'user',content:text.slice(0,2500)}
     ]);
     meta.processed_content=cleaned||text;
-    showL('保存到云端...');
+    showL('保存...');
     const old=await sbGet('lessons','is_active=eq.true');
     if(old&&old.length)for(const l of old)await sbPatch('lessons',l.id,{is_active:false});
     const saved=await sbPost('lessons',{title:meta.title||filename,subject:(meta.subject||'')+(meta.subject_zh?' · '+meta.subject_zh:''),content:meta.processed_content,summary:JSON.stringify(meta),is_active:true});
-    if(!saved||!saved[0])throw new Error('云端保存失败');
+    if(!saved||!saved[0])throw new Error('保存失败');
     lesson=saved[0];lesson._m=meta;vocab=[];
     renderLesson(meta);hideL();
     setTimeout(initChat,800);
-  }catch(err){hideL();toast('失败: '+err.message);console.error(err);}
+  }catch(err){hideL();toast('失败: '+err.message);}
 }
+
 async function resumeLesson(){
-  showL('加载课程...');
+  showL('加载...');
   try{
     const ls=await sbGet('lessons','is_active=eq.true&limit=1');
     if(!ls||!ls.length){hideL();toast('没有保存的课程');return;}
     lesson=ls[0];
     try{lesson._m=JSON.parse(lesson.summary);}catch(e){lesson._m={};}
-    const vs=await sbGet('vocab_items','lesson_id=eq.'+lesson.id);
-    vocab=vs||[];renderLesson(lesson._m);hideL();
+    vocab=await sbGet('vocab_items','lesson_id=eq.'+lesson.id)||[];
+    renderLesson(lesson._m);hideL();
     setTimeout(initChat,800);
-  }catch(e){hideL();toast('加载失败: '+e.message);}
+  }catch(e){hideL();toast('加载失败');}
 }
+
 function renderLesson(m){
   document.getElementById('uscreen').style.display='none';
   document.getElementById('lv').style.display='block';
@@ -335,11 +355,13 @@ function renderLesson(m){
   renderCtx(m.processed_content||lesson.content||'');
   renderVocab();updateVN();
 }
+
 function renderAW(aws){
   const el=document.getElementById('aws');el.style.display='flex';
   el.innerHTML=aws.map((a,i)=>'<div class="aw"><div class="ai" id="ai'+i+'">'+(a.artist||'')+'<br><span style="color:#444">'+(a.year||'')+'</span></div><div class="ac">'+(a.work||'')+'<br>'+(a.artist||'')+'</div></div>').join('');
   aws.forEach((a,i)=>{fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent((a.artist||'').split(' ').pop())).then(r=>r.json()).then(d=>{if(d.thumbnail&&d.thumbnail.source){const el=document.getElementById('ai'+i);if(el){el.style.backgroundImage='url('+d.thumbnail.source+')';el.style.backgroundSize='cover';el.style.backgroundPosition='center';el.innerHTML='';}}}).catch(()=>{});});
 }
+
 function renderCtx(md){
   const sel=new Set(vocab.filter(v=>v.selected).map(v=>v.word.toLowerCase()));
   const done=new Set(vocab.filter(v=>v.mastered).map(v=>v.word.toLowerCase()));
@@ -353,6 +375,7 @@ function renderCtx(md){
   });
   document.getElementById('ctx').innerHTML=html;
 }
+
 async function clickW(e,lo,orig){
   e.stopPropagation();curW=lo;
   const ex=vocab.find(v=>v.word.toLowerCase()===lo&&v.selected);
@@ -371,11 +394,12 @@ async function clickW(e,lo,orig){
   pop.classList.add('on');
   if(!ex)fetchDef(lo,orig);
 }
+
 async function fetchDef(lo,orig){
   try{
     const raw=await callAI([
-      {role:'system',content:'Return ONLY valid JSON, no other text.'},
-      {role:'user',content:'Word: "'+orig+'" in context of '+(lesson&&lesson.subject||'art')+'. JSON: {"phonetic":"/x/ British IPA","zh":"中文2-4字","synonyms":"w1, w2","type":"noun"}'}
+      {role:'system',content:'Return ONLY valid JSON.'},
+      {role:'user',content:'Word "'+orig+'" in context of '+(lesson&&lesson.subject||'art')+'. JSON: {"phonetic":"/x/ British","zh":"中文2-4字","synonyms":"w1,w2","type":"noun"}'}
     ]);
     const j1=raw.indexOf('{'),j2=raw.lastIndexOf('}');
     if(j1===-1)return;
@@ -388,6 +412,7 @@ async function fetchDef(lo,orig){
     }
   }catch(e){document.getElementById('pz').textContent=orig;}
 }
+
 async function doAdd(){
   const lo=popD.lo,orig=popD.orig,ex=popD.ex,def=popD.def;
   if(ex){
@@ -403,6 +428,7 @@ async function doAdd(){
   renderCtx(lesson._m?lesson._m.processed_content||lesson.content:lesson.content);
   renderVocab();updateVN();
 }
+
 function toggleVdr(){const d=document.getElementById('vdr');d.classList.toggle('on');if(d.classList.contains('on'))renderVocab();}
 function renderVocab(){
   const sel=vocab.filter(v=>v.selected);
@@ -412,6 +438,7 @@ function renderVocab(){
   list.innerHTML=sel.map(v=>'<div class="vr'+(v.mastered?' done':'')+'"><div class="vw">'+v.word+'</div><div class="vz">'+(v.zh||'')+'</div><div class="va"><button class="vb" onclick="spk(\''+v.word+'\')">♪</button><button class="vb" onclick="markDone(\''+v.id+'\')">'+(v.mastered?'↩':'✓')+'</button><button class="vb" onclick="rmW(\''+v.id+'\')">×</button></div></div>').join('');
 }
 function updateVN(){document.getElementById('vcn').textContent=vocab.filter(v=>v.selected).length;}
+
 async function markDone(id){
   const v=vocab.find(x=>x.id===id);if(!v)return;
   v.mastered=!v.mastered;
@@ -437,6 +464,7 @@ async function endLesson(){
   document.getElementById('fi').value='';
   toast('课程已结束');
 }
+
 function spk(w){
   if(!w)return;speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(w);u.lang='en-GB';u.rate=0.82;
@@ -461,6 +489,7 @@ function readNext(){
 }
 function stopRead(){talking=false;speechSynthesis.cancel();document.getElementById('readBtn').textContent='▶ 朗读';document.getElementById('readBtn').classList.remove('on');}
 setTimeout(function(){speechSynthesis.getVoices();},300);
+
 function toggleChat(){
   var p=document.getElementById('cp');var r=document.getElementById('rd');
   var on=p.classList.toggle('on');
@@ -481,14 +510,15 @@ function getSys(){
   var rw=vocab.slice(-8).map(function(v){return v.word;}).join(', ')||'aesthetics, phenomenology';
   var P='【学生档案】Julia（朱砚桐），中国女生，NABA米兰绘画与视觉艺术本科一年级。英语B1（读写接近B2，口语听力很弱）。ADHD，焦虑，内向害羞。目标：2年内通过B2/C1口语考试。当前科目：'+subj+'。'+ctx+' 最近学过：'+rw+'。重要：容易受挫，需要鼓励，不能让她感到被评判。';
   var ps={
-    tutor:P+'\n\n你是热情博学的艺术哲学教授，中英双语流利，真心热爱所教内容。规则：每次最多4句；优先中文回答，英文术语加括号如现象学[phenomenology]；每次一个生动比喻或艺术作品举例；结尾一个引发好奇的问题；任何题外话都认真回答；绝不说"这很简单"。开场：询问今天课程里让她最困惑或最感兴趣的部分。',
-    oral:P+'\n\n你是专门帮助害羞中国艺术生通过口语考试的暖心教练。课程顺序：1)热身2-3轮聊日常生活零压力 2)自然过渡到艺术话题 3)用今天课程概念对话练习 4)只有她放松了才做模拟考试题。纠正规则：绝不打断等她完整说完；最多指出2个错误并在她回答后说；她用中文回答时温柔鼓励试一句英文；为每次英文尝试喝彩哪怕只有三个词。开场：用轻松方式问她最近生活。',
-    write:P+'\n\n你是把"完全不会写英文"的学生变成自信写作者的写作教练。每次给一个极小任务：a)完成句子"In this lesson art means ___" b)用8个英文单词描述一件艺术品 c)写一句关于今天米兰的话。批改格式固定：✗你写的:[原文] ✓建议:[修改] 💡原因:[一句话] →下一步:[稍难任务]。她用中文写时帮翻译并说"大声读出来也算练习"。开场：给最简单的任务让她感觉"这我肯定能做到"。',
-    free:P+'\n\n你是她在米兰认识的聪明有趣朋友，自然地混着中英文聊天。回复简短3-4句。中英混搭自然，有趣英文词顺带解释。真心好奇她的生活。开场：分享一个关于艺术或米兰的有趣冷知识，然后问她最近在想什么。'
+    tutor:P+'\n\n你是热情博学的艺术哲学教授，中英双语流利。规则：每次最多4句；中文回答英文术语加括号；每次一个比喻或作品举例；结尾一个好奇问题；绝不说"这很简单"。开场：问今天课程最困惑或最有趣的部分。',
+    oral:P+'\n\n你是帮助害羞中国艺术生通过口语考试的暖心教练。顺序：1)热身聊日常 2)过渡到艺术 3)课程概念练习 4)放松后才模拟考试。纠正：等她说完再指出最多2个错误；中文回答时温柔鼓励说一句英文；为每次英文尝试喝彩。开场：轻松问最近生活。',
+    write:P+'\n\n你是写作教练，一句话一句话来。任务选项：a)"In this lesson art means ___" b)8个词描述一件艺术品 c)一句关于米兰的话。批改：✗原文 ✓修改 💡原因 →下一步。中文写时帮翻译说"读出来也算练习"。开场：给最简单任务。',
+    free:P+'\n\n你是她在米兰的聪明有趣朋友，中英混搭聊天。3-4句。有趣英文词顺带解释。开场：分享艺术或米兰冷知识，问她在想什么。'
   };
   return ps[chatMode]||ps.tutor;
 }
 async function initChat(){
+  if(!getKey())return;
   addDots();
   try{
     var r=await callAI([{role:'system',content:getSys()},{role:'user',content:'开始吧。'}]);
