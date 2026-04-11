@@ -194,19 +194,24 @@ html,body{height:100%;overflow:hidden;background:var(--bk);color:var(--wh);font-
 <div class="lov" id="lov"><div class="sp"></div><div class="lt" id="lt">分析中...</div></div>
 <div class="tst" id="tst"></div>
 <script>
-const ORK='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';
-const ORU='https://openrouter.ai/api/v1/chat/completions';
-const ORM='meta-llama/llama-3.3-70b-instruct:free';
+const ORK='AIzaSyCfWht_xv67L1xXeJbaL7WgDmpRmGkNTZQ';
+const ORU='https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+ORK;
+const ORM='gemini';
 const SBU='https://wbgmyoolenmbvnfeupkll.supabase.co';
 const SBK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndiZ215b29lbmJtdm5mZXVwa2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MjEyNjcsImV4cCI6MjA5MTI5NzI2N30.i3d4C1p7j1P24UNaa_4GRSq_m3NmvcFzaUvo93FXxgw';
 let lesson=null,vocab=[],chatHist=[],chatMode='tutor',curW='',popD={},sumOpen=true,talking=false;
-const ORH={'Content-Type':'application/json','Authorization':'Bearer '+ORK,'HTTP-Referer':'https://rad-paletas-bf3535.netlify.app','X-Title':'JuliaSecretary'};
+const ORH={'Content-Type':'application/json'};
 const SBH={'apikey':SBK,'Authorization':'Bearer '+SBK,'Content-Type':'application/json'};
 async function callAI(msgs){
-  const r=await fetch(ORU,{method:'POST',headers:ORH,body:JSON.stringify({model:ORM,messages:msgs,max_tokens:1500,temperature:0.7})});
-  const d=await r.json();
+  var sys=msgs.find(function(m){return m.role==='system';});
+  var userMsgs=msgs.filter(function(m){return m.role!=='system';});
+  var contents=userMsgs.map(function(m){return{role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]};});
+  var body={contents:contents,generationConfig:{maxOutputTokens:1500,temperature:0.7}};
+  if(sys)body.system_instruction={parts:[{text:sys.content}]};
+  var r=await fetch(ORU,{method:'POST',headers:ORH,body:JSON.stringify(body)});
+  var d=await r.json();
   if(d.error)throw new Error(d.error.message||'AI错误');
-  return d.choices?.[0]?.message?.content||'';
+  return d.candidates?.[0]?.content?.parts?.[0]?.text||'';
 }
 async function sbGet(t,q=''){const r=await fetch(SBU+'/rest/v1/'+t+'?'+q+'&order=created_at.desc',{headers:SBH});return r.json();}
 async function sbPost(t,d){const r=await fetch(SBU+'/rest/v1/'+t,{method:'POST',headers:{...SBH,'Prefer':'return=representation'},body:JSON.stringify(d)});return r.json();}
