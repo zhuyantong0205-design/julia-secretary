@@ -225,11 +225,20 @@ async function handleUpload(e){
   await processLesson(text.slice(0,6000),file.name);
 }
 async function readEpub(file){
-  const buf=await file.arrayBuffer();
-  const raw=new TextDecoder('utf-8',{fatal:false}).decode(new Uint8Array(buf));
-  const bodies=[...raw.matchAll(/<body[^>]*>([\s\S]*?)<\/body>/gi)];
-  if(bodies.length)return bodies.map(m=>m[1].replace(/<[^>]+>/g,' ').replace(/\s+/g,' ')).join(' ').trim();
-  return raw.replace(/<[^>]+>/g,' ').replace(/&[a-z]+;/gi,' ').replace(/\s+/g,' ').trim();
+  try{
+    const buf=await file.arrayBuffer();
+    const raw=new TextDecoder('utf-8',{fatal:false}).decode(new Uint8Array(buf));
+    const bodies=[...raw.matchAll(/<body[^>]*>([\s\S]*?)<\/body>/gi)];
+    if(bodies.length){
+      const text=bodies.map(m=>m[1].replace(/<[^>]+>/g,' ').replace(/\s+/g,' ')).join(' ').trim();
+      if(text.length>100)return text;
+    }
+    const text2=raw.replace(/<[^>]+>/g,' ').replace(/&[a-z]+;/gi,' ').replace(/\s+/g,' ').trim();
+    if(text2.length>100)return text2;
+    throw new Error('无法提取文本');
+  }catch(e){
+    throw new Error('epub读取失败: '+e.message);
+  }
 }
 async function processLesson(text,filename){
   showL('AI分析科目...');
