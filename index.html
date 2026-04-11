@@ -218,6 +218,7 @@ async function handleUpload(e){
   const file=e.target.files[0];if(!file)return;
   showL('读取文件: '+file.name);
   let text='';
+  toast('文件: '+file.name+' 大小:'+file.size+'bytes');
   try{if(file.name.endsWith('.epub')){text=await readEpub(file);}else{text=await file.text();}}
   catch(err){hideL();toast('读取失败: '+err.message);return;}
   if(!text||text.length<50){hideL();toast('内容为空，请检查文件');return;}
