@@ -6,243 +6,224 @@
 <title>Julia的秘书一号</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&family=Noto+Serif+SC:wght@300;400&display=swap');
-:root{--black:#0a0a0a;--white:#f5f5f3;--g1:#1a1a1a;--g2:#2a2a2a;--g3:#404040;--g4:#6a6a6a;--g5:#9a9a9a;--g6:#c8c8c8;--bd:#222}
+:root{--bk:#0a0a0a;--wh:#f5f5f3;--g1:#1a1a1a;--g2:#2a2a2a;--g3:#404040;--g4:#6a6a6a;--g5:#9a9a9a;--bd:#222}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px}
+html,body{height:100%;overflow:hidden;background:var(--bk);color:var(--wh);font-family:'DM Sans',sans-serif;font-size:14px}
 .hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--bd);flex-shrink:0}
-.hdr-title{font-family:'EB Garamond',serif;font-size:18px;letter-spacing:.04em}
-.hdr-sub{font-size:10px;color:var(--g4);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
+.hdr-t{font-family:'EB Garamond',serif;font-size:18px;letter-spacing:.04em}
+.hdr-s{font-size:10px;color:var(--g4);letter-spacing:.12em;text-transform:uppercase;margin-top:2px}
 .hdr-r{display:flex;gap:6px}
 .hbtn{width:32px;height:32px;background:none;border:1px solid var(--bd);color:var(--g4);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:'DM Sans',sans-serif}
-.hbtn:hover,.hbtn.on{border-color:var(--g3);color:var(--white)}
+.hbtn:hover,.hbtn.on{border-color:var(--g3);color:var(--wh)}
 .body{display:flex;flex:1;overflow:hidden;height:calc(100vh - 57px)}
-.reading{flex:1;overflow-y:auto;display:flex;flex-direction:column}
-.reading.pushed{margin-right:300px}
-.upload-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;gap:18px}
-.u-mark{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--g4)}
-.u-title{font-family:'EB Garamond',serif;font-size:34px;color:var(--white);line-height:1.2}
-.u-desc{font-size:12px;color:var(--g4);line-height:1.9;max-width:260px}
-.u-zone{width:100%;max-width:280px;border:1px solid var(--bd);padding:22px;cursor:pointer;transition:border-color .2s;display:flex;flex-direction:column;align-items:center;gap:8px}
-.u-zone:hover{border-color:var(--g3)}
-.u-zone-icon{font-size:22px;color:var(--g4)}
-.u-zone-text{font-size:13px;color:var(--g5)}
-.u-zone-sub{font-size:11px;color:var(--g4)}
-#fileInput{display:none}
-.resume-btn{font-size:12px;color:var(--g4);background:none;border:1px solid var(--bd);padding:8px 20px;cursor:pointer;letter-spacing:.1em;transition:all .15s;font-family:'DM Sans',sans-serif}
-.resume-btn:hover{color:var(--white);border-color:var(--g3)}
-.sum-wrap{border-bottom:1px solid var(--bd)}
-.sum-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer}
-.sum-label{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--g4)}
-.sum-tog{font-size:11px;color:var(--g4);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif}
-.sum-body{padding:0 18px 18px}
-.s-title{font-family:'EB Garamond',serif;font-size:24px;margin-bottom:6px;line-height:1.3}
-.s-subject{font-size:11px;letter-spacing:.1em;color:var(--g4);text-transform:uppercase;margin-bottom:14px}
-.s-text{font-size:13px;color:var(--g5);line-height:1.9;margin-bottom:14px}
-.s-concepts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-.s-tag{font-size:11px;padding:3px 10px;border:1px solid var(--bd);color:var(--g5);letter-spacing:.06em}
-.s-q{font-family:'EB Garamond',serif;font-size:16px;font-style:italic;color:var(--g5);padding:12px 14px;border-left:1px solid var(--g3)}
-.artworks{display:flex;gap:10px;overflow-x:auto;padding:14px 18px;border-bottom:1px solid var(--bd);scrollbar-width:none}
-.artworks::-webkit-scrollbar{display:none}
-.aw-item{flex-shrink:0;width:110px}
-.aw-img{width:110px;height:80px;background:var(--g1);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--g4);text-align:center;padding:6px;background-size:cover;background-position:center}
-.aw-cap{padding:5px 0;font-size:10px;color:var(--g4);line-height:1.5}
-.ctrl{display:flex;align-items:center;gap:8px;padding:12px 18px;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.rd{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.rd.pushed{margin-right:300px}
+.uscreen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;gap:18px}
+.u-mk{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--g4)}
+.u-ti{font-family:'EB Garamond',serif;font-size:34px;color:var(--wh);line-height:1.2}
+.u-de{font-size:12px;color:var(--g4);line-height:1.9;max-width:260px}
+.u-zo{width:100%;max-width:280px;border:1px solid var(--bd);padding:22px;cursor:pointer;transition:border-color .2s;display:flex;flex-direction:column;align-items:center;gap:8px}
+.u-zo:hover{border-color:var(--g3)}
+.u-zi{font-size:22px;color:var(--g4)}
+.u-zt{font-size:13px;color:var(--g5)}
+.u-zs{font-size:11px;color:var(--g4)}
+#fi{display:none}
+.rbtn{font-size:12px;color:var(--g4);background:none;border:1px solid var(--bd);padding:8px 20px;cursor:pointer;letter-spacing:.1em;transition:all .15s;font-family:'DM Sans',sans-serif}
+.rbtn:hover{color:var(--wh);border-color:var(--g3)}
+.sw{border-bottom:1px solid var(--bd)}
+.sh{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer}
+.sl{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--g4)}
+.st{font-size:11px;color:var(--g4);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif}
+.sb{padding:0 18px 18px}
+.s-ti{font-family:'EB Garamond',serif;font-size:24px;margin-bottom:6px;line-height:1.3}
+.s-su{font-size:11px;letter-spacing:.1em;color:var(--g4);text-transform:uppercase;margin-bottom:14px}
+.s-tx{font-size:13px;color:var(--g5);line-height:1.9;margin-bottom:14px}
+.s-co{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.s-tg{font-size:11px;padding:3px 10px;border:1px solid var(--bd);color:var(--g5);letter-spacing:.06em}
+.s-qu{font-family:'EB Garamond',serif;font-size:16px;font-style:italic;color:var(--g5);padding:12px 14px;border-left:1px solid var(--g3)}
+.aws{display:flex;gap:10px;overflow-x:auto;padding:14px 18px;border-bottom:1px solid var(--bd);scrollbar-width:none}
+.aws::-webkit-scrollbar{display:none}
+.aw{flex-shrink:0;width:110px}
+.ai{width:110px;height:80px;background:var(--g1);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--g4);text-align:center;padding:6px;background-size:cover;background-position:center}
+.ac{padding:5px 0;font-size:10px;color:var(--g4);line-height:1.5}
+.ct{display:flex;align-items:center;gap:8px;padding:12px 18px;border-bottom:1px solid var(--bd);flex-wrap:wrap}
 .cbtn{font-size:11px;padding:5px 12px;background:none;border:1px solid var(--bd);color:var(--g4);cursor:pointer;letter-spacing:.08em;transition:all .15s;font-family:'DM Sans',sans-serif}
-.cbtn:hover{color:var(--white);border-color:var(--g3)}
-.cbtn.on{color:var(--white);border-color:var(--g5)}
+.cbtn:hover{color:var(--wh);border-color:var(--g3)}
+.cbtn.on{color:var(--wh);border-color:var(--g5)}
 .vc{margin-left:auto;font-size:11px;color:var(--g4);letter-spacing:.08em}
-.vc span{color:var(--white)}
-.content-text{padding:20px 18px 100px;font-family:'EB Garamond',serif;font-size:19px;line-height:2;color:var(--white)}
-.content-text p{margin-bottom:1.4em}
-.content-text h1{font-size:22px;font-weight:400;margin:2em 0 .6em}
-.content-text h2{font-size:11px;font-weight:400;color:var(--g5);margin:1.6em 0 .5em;letter-spacing:.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif}
+.vc span{color:var(--wh)}
+.ctx{padding:20px 18px 100px;font-family:'EB Garamond',serif;font-size:19px;line-height:2;color:var(--wh)}
+.ctx p{margin-bottom:1.4em}
+.ctx h1{font-size:22px;font-weight:400;margin:2em 0 .6em}
+.ctx h2{font-size:11px;font-weight:400;color:var(--g5);margin:1.6em 0 .5em;letter-spacing:.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif}
 .w{cursor:pointer;border-bottom:1px solid transparent;transition:border-color .1s}
 .w:hover{border-bottom-color:var(--g4)}
-.w.sel{border-bottom:1px solid var(--white)}
+.w.sel{border-bottom:1px solid var(--wh)}
 .w.done{border-bottom:1px solid var(--g3);color:var(--g4)}
-.popup{position:fixed;z-index:200;background:var(--g1);border:1px solid var(--g2);padding:16px;width:248px;box-shadow:0 12px 40px rgba(0,0,0,.8);display:none}
-.popup.on{display:block}
-.p-word{font-family:'EB Garamond',serif;font-size:22px;margin-bottom:1px}
-.p-ph{font-size:11px;color:var(--g4);margin-bottom:8px;font-style:italic}
-.p-zh{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--white);margin-bottom:4px}
-.p-syn{font-size:11px;color:var(--g4);margin-bottom:12px;line-height:1.7}
-.p-acts{display:flex;gap:6px}
-.p-btn{flex:1;padding:7px 0;font-size:11px;letter-spacing:.08em;border:1px solid var(--bd);background:none;color:var(--g5);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
-.p-btn:hover{color:var(--white);border-color:var(--g3)}
-.p-btn.on{color:var(--white);border-color:var(--g5)}
-.vdrawer{position:fixed;bottom:0;left:0;right:0;background:var(--g1);border-top:1px solid var(--bd);z-index:150;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);max-height:60vh;overflow-y:auto}
-.vdrawer.on{transform:translateY(0)}
-.vd-head{padding:16px 18px 10px;border-bottom:1px solid var(--bd)}
-.vd-title{font-family:'EB Garamond',serif;font-size:20px}
-.vd-sub{font-size:11px;color:var(--g4);margin-top:2px;letter-spacing:.06em}
-.vd-list{padding:10px 18px;display:flex;flex-direction:column;gap:0}
-.vd-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd)}
-.vd-row.done{opacity:.4}
-.vd-word{font-family:'EB Garamond',serif;font-size:18px;flex:1}
-.vd-zh{font-size:12px;color:var(--g5);flex:1;font-family:'Noto Serif SC',serif}
-.vd-acts{display:flex;gap:4px}
-.vd-btn{width:28px;height:28px;background:none;border:1px solid var(--bd);color:var(--g4);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.vd-btn:hover{color:var(--white);border-color:var(--g3)}
-.vd-empty{padding:24px 0;text-align:center;font-size:12px;color:var(--g4)}
-.end-btn{width:calc(100% - 36px);margin:10px 18px 18px;padding:12px;background:none;border:1px solid var(--g3);color:var(--g5);font-size:12px;letter-spacing:.1em;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
-.end-btn:hover{color:var(--white);border-color:var(--g4)}
-.chat-panel{position:fixed;top:57px;right:0;bottom:0;width:300px;background:var(--black);border-left:1px solid var(--bd);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:100}
-.chat-panel.on{transform:translateX(0)}
-.cp-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--bd);flex-shrink:0}
-.cp-title{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--g5)}
-.cp-modes{display:flex;border-bottom:1px solid var(--bd);flex-shrink:0}
-.cp-mode{flex:1;padding:9px 4px;font-size:11px;text-align:center;background:none;border:none;border-right:1px solid var(--bd);color:var(--g4);cursor:pointer;letter-spacing:.05em;font-family:'DM Sans',sans-serif;transition:all .15s}
-.cp-mode:last-child{border-right:none}
-.cp-mode.on{color:var(--white);background:var(--g1)}
-.cp-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
-.msg{font-size:13px;line-height:1.7;padding:10px 12px;max-width:94%}
-.msg-ai{background:var(--g1);border:1px solid var(--bd);align-self:flex-start;border-radius:0 6px 6px 6px;color:var(--white)}
-.msg-user{background:none;border:1px solid var(--g3);align-self:flex-end;border-radius:6px 0 6px 6px;color:var(--g5)}
-.cp-in-row{display:flex;border-top:1px solid var(--bd);flex-shrink:0}
-.cp-in{flex:1;background:none;border:none;padding:12px 14px;font-size:13px;color:var(--white);font-family:'DM Sans',sans-serif;outline:none;resize:none;max-height:80px;overflow-y:auto}
-.cp-in::placeholder{color:var(--g4)}
-.cp-send{width:44px;background:none;border:none;border-left:1px solid var(--bd);color:var(--g4);font-size:16px;cursor:pointer;transition:color .15s}
-.cp-send:hover{color:var(--white)}
+.pop{position:fixed;z-index:200;background:var(--g1);border:1px solid var(--g2);padding:16px;width:248px;box-shadow:0 12px 40px rgba(0,0,0,.8);display:none}
+.pop.on{display:block}
+.pw{font-family:'EB Garamond',serif;font-size:22px;margin-bottom:1px}
+.pp{font-size:11px;color:var(--g4);margin-bottom:8px;font-style:italic}
+.pz{font-family:'Noto Serif SC',serif;font-size:16px;color:var(--wh);margin-bottom:4px}
+.ps{font-size:11px;color:var(--g4);margin-bottom:12px;line-height:1.7}
+.pa{display:flex;gap:6px}
+.pb{flex:1;padding:7px 0;font-size:11px;letter-spacing:.08em;border:1px solid var(--bd);background:none;color:var(--g5);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.pb:hover{color:var(--wh);border-color:var(--g3)}
+.pb.on{color:var(--wh);border-color:var(--g5)}
+.vdr{position:fixed;bottom:0;left:0;right:0;background:var(--g1);border-top:1px solid var(--bd);z-index:150;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);max-height:60vh;overflow-y:auto}
+.vdr.on{transform:translateY(0)}
+.vh{padding:16px 18px 10px;border-bottom:1px solid var(--bd)}
+.vt{font-family:'EB Garamond',serif;font-size:20px}
+.vs{font-size:11px;color:var(--g4);margin-top:2px;letter-spacing:.06em}
+.vl{padding:10px 18px;display:flex;flex-direction:column;gap:0}
+.vr{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.vr.done{opacity:.4}
+.vw{font-family:'EB Garamond',serif;font-size:18px;flex:1}
+.vz{font-size:12px;color:var(--g5);flex:1;font-family:'Noto Serif SC',serif}
+.va{display:flex;gap:4px}
+.vb{width:28px;height:28px;background:none;border:1px solid var(--bd);color:var(--g4);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.vb:hover{color:var(--wh);border-color:var(--g3)}
+.ve{padding:24px 0;text-align:center;font-size:12px;color:var(--g4)}
+.endbtn{width:calc(100% - 36px);margin:10px 18px 18px;padding:12px;background:none;border:1px solid var(--g3);color:var(--g5);font-size:12px;letter-spacing:.1em;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.endbtn:hover{color:var(--wh);border-color:var(--g4)}
+.cp{position:fixed;top:57px;right:0;bottom:0;width:300px;background:var(--bk);border-left:1px solid var(--bd);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:100}
+.cp.on{transform:translateX(0)}
+.cph{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--bd);flex-shrink:0}
+.cpt{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--g5)}
+.cpm{display:flex;border-bottom:1px solid var(--bd);flex-shrink:0}
+.cpb{flex:1;padding:9px 4px;font-size:11px;text-align:center;background:none;border:none;border-right:1px solid var(--bd);color:var(--g4);cursor:pointer;letter-spacing:.05em;font-family:'DM Sans',sans-serif;transition:all .15s}
+.cpb:last-child{border-right:none}
+.cpb.on{color:var(--wh);background:var(--g1)}
+.cms{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.mg{font-size:13px;line-height:1.7;padding:10px 12px;max-width:94%}
+.mg-ai{background:var(--g1);border:1px solid var(--bd);align-self:flex-start;border-radius:0 6px 6px 6px;color:var(--wh)}
+.mg-us{background:none;border:1px solid var(--g3);align-self:flex-end;border-radius:6px 0 6px 6px;color:var(--g5)}
+.cir{display:flex;border-top:1px solid var(--bd);flex-shrink:0}
+.cin{flex:1;background:none;border:none;padding:12px 14px;font-size:13px;color:var(--wh);font-family:'DM Sans',sans-serif;outline:none;resize:none;max-height:80px;overflow-y:auto}
+.cin::placeholder{color:var(--g4)}
+.csend{width:44px;background:none;border:none;border-left:1px solid var(--bd);color:var(--g4);font-size:16px;cursor:pointer;transition:color .15s}
+.csend:hover{color:var(--wh)}
 .dots span{display:inline-block;width:4px;height:4px;background:var(--g4);border-radius:50%;margin:0 2px;animation:bc 1.2s infinite}
 .dots span:nth-child(2){animation-delay:.2s}
 .dots span:nth-child(3){animation-delay:.4s}
 @keyframes bc{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
-.loading{position:fixed;inset:0;background:var(--black);z-index:300;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px}
-.loading.on{display:flex}
-.spin{width:22px;height:22px;border:1px solid var(--g3);border-top-color:var(--white);border-radius:50%;animation:sp .8s linear infinite}
-@keyframes sp{to{transform:rotate(360deg)}}
-.load-txt{font-size:12px;color:var(--g4);letter-spacing:.1em;text-align:center;max-width:220px;line-height:1.8}
-.toast{position:fixed;bottom:72px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--g1);border:1px solid var(--g3);color:var(--g5);padding:8px 18px;font-size:12px;z-index:500;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;letter-spacing:.06em}
-.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.lov{position:fixed;inset:0;background:var(--bk);z-index:300;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+.lov.on{display:flex}
+.sp{width:22px;height:22px;border:1px solid var(--g3);border-top-color:var(--wh);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.lt{font-size:12px;color:var(--g4);letter-spacing:.1em;text-align:center;max-width:220px;line-height:1.8}
+.tst{position:fixed;bottom:72px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--g1);border:1px solid var(--g3);color:var(--g5);padding:8px 18px;font-size:12px;z-index:500;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;letter-spacing:.06em}
+.tst.on{opacity:1;transform:translateX(-50%) translateY(0)}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--g2)}
-@media(max-width:600px){.chat-panel{width:100%}.reading.pushed{margin-right:0}}
+@media(max-width:600px){.cp{width:100%}.rd.pushed{margin-right:0}}
 </style>
 </head>
 <body>
 <div class="hdr">
-  <div><div class="hdr-title">Julia的秘书一号</div><div class="hdr-sub" id="subTag">— 上传课程文件 —</div></div>
+  <div><div class="hdr-t">Julia的秘书一号</div><div class="hdr-s" id="subTag">上传课程文件</div></div>
   <div class="hdr-r">
-    <button class="hbtn" onclick="toggleDrawer()">词</button>
-    <button class="hbtn" id="chatHbtn" onclick="toggleChat()">助</button>
+    <button class="hbtn" onclick="toggleVdr()">词</button>
+    <button class="hbtn" id="chatBtn" onclick="toggleChat()">助</button>
   </div>
 </div>
 <div class="body">
-  <div class="reading" id="reading">
-    <div class="upload-screen" id="uploadScreen">
-      <div><div class="u-mark">Julia's Secretary No.1</div><div class="u-title">上传今日<br>课堂讲义</div></div>
-      <div class="u-desc">支持 ePub · PDF · TXT<br>AI自动识别科目，整理重点<br>数据永久保存，随时继续</div>
-      <label class="u-zone" for="fileInput">
-        <div class="u-zone-icon">↑</div>
-        <div class="u-zone-text">选择文件</div>
-        <div class="u-zone-sub">NABA课程平台下载的ePub</div>
+  <div class="rd" id="rd">
+    <div class="uscreen" id="uscreen">
+      <div><div class="u-mk">Julia's Secretary No.1</div><div class="u-ti">上传今日<br>课堂讲义</div></div>
+      <div class="u-de">支持 ePub · TXT<br>AI自动识别科目整理重点<br>数据永久保存随时继续</div>
+      <label class="u-zo" for="fi">
+        <div class="u-zi">↑</div>
+        <div class="u-zt">点击选择文件</div>
+        <div class="u-zs">NABA课程平台下载的ePub</div>
       </label>
-      <input type="file" id="fileInput" accept=".epub,.pdf,.txt" onchange="handleUpload(event)">
-      <button class="resume-btn" id="resumeBtn" style="display:none" onclick="resumeLesson()">继续上次课程 ↗</button>
+      <input type="file" id="fi" accept=".epub,.txt" onchange="handleUpload(event)">
+      <button class="rbtn" id="resumeBtn" style="display:none" onclick="resumeLesson()">继续上次课程 ↗</button>
     </div>
-    <div id="lessonView" style="display:none">
-      <div class="sum-wrap">
-        <div class="sum-head" onclick="toggleSum()"><span class="sum-label">课程摘要 · Summary</span><button class="sum-tog" id="sumTog">收起</button></div>
-        <div id="sumBody" class="sum-body">
-          <div class="s-title" id="sTitle"></div><div class="s-subject" id="sSubject"></div>
-          <div class="s-text" id="sText"></div><div class="s-concepts" id="sConcepts"></div>
-          <div class="s-q" id="sQ"></div>
+    <div id="lv" style="display:none">
+      <div class="sw">
+        <div class="sh" onclick="toggleSum()"><span class="sl">课程摘要</span><button class="st" id="stog">收起</button></div>
+        <div id="sbody" class="sb">
+          <div class="s-ti" id="sTi"></div>
+          <div class="s-su" id="sSu"></div>
+          <div class="s-tx" id="sTx"></div>
+          <div class="s-co" id="sCo"></div>
+          <div class="s-qu" id="sQu"></div>
         </div>
       </div>
-      <div class="artworks" id="artworks" style="display:none"></div>
-      <div class="ctrl">
+      <div class="aws" id="aws" style="display:none"></div>
+      <div class="ct">
         <button class="cbtn" id="readBtn" onclick="toggleRead()">▶ 朗读</button>
         <button class="cbtn" onclick="stopRead()">■ 停止</button>
-        <div class="vc">已选 <span id="vcN">0</span> 词</div>
+        <div class="vc">已选 <span id="vcn">0</span> 词</div>
       </div>
-      <div class="content-text" id="contentText"></div>
+      <div class="ctx" id="ctx"></div>
     </div>
   </div>
-  <div class="chat-panel" id="chatPanel">
-    <div class="cp-head"><span class="cp-title">学习助手</span><button class="hbtn" onclick="toggleChat()" style="width:26px;height:26px;font-size:11px">✕</button></div>
-    <div class="cp-modes">
-      <button class="cp-mode on" id="cm-tutor" onclick="setMode('tutor')">讲解</button>
-      <button class="cp-mode" id="cm-oral" onclick="setMode('oral')">口语</button>
-      <button class="cp-mode" id="cm-write" onclick="setMode('write')">写作</button>
-      <button class="cp-mode" id="cm-free" onclick="setMode('free')">闲聊</button>
+  <div class="cp" id="cp">
+    <div class="cph"><span class="cpt">学习助手</span><button class="hbtn" onclick="toggleChat()" style="width:26px;height:26px;font-size:11px">✕</button></div>
+    <div class="cpm">
+      <button class="cpb on" id="cm-tutor" onclick="setMode('tutor')">讲解</button>
+      <button class="cpb" id="cm-oral" onclick="setMode('oral')">口语</button>
+      <button class="cpb" id="cm-write" onclick="setMode('write')">写作</button>
+      <button class="cpb" id="cm-free" onclick="setMode('free')">闲聊</button>
     </div>
-    <div class="cp-msgs" id="cpMsgs"></div>
-    <div class="cp-in-row">
-      <textarea class="cp-in" id="cpIn" placeholder="输入问题..." rows="1"
+    <div class="cms" id="cms"></div>
+    <div class="cir">
+      <textarea class="cin" id="cin" placeholder="输入问题..." rows="1"
         onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg()}"
         oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px'"></textarea>
-      <button class="cp-send" onclick="sendMsg()">↑</button>
+      <button class="csend" onclick="sendMsg()">↑</button>
     </div>
   </div>
 </div>
-<div class="vdrawer" id="vdrawer">
-  <div class="vd-head"><div class="vd-title">词汇本</div><div class="vd-sub" id="vdS​​​​​​​​​​​​​​​​ub">本课 0 词</div></div>
-    <div class="vd-list" id="vdList"></div>
-  <button class="end-btn" onclick="endLesson()">结束本课 · 上传下一个讲义</button>
+<div class="vdr" id="vdr">
+  <div class="vh"><div class="vt">词汇本</div><div class="vs" id="vsub">本课 0 词</div></div>
+  <div class="vl" id="vlist"></div>
+  <button class="endbtn" onclick="endLesson()">结束本课 · 上传下一个讲义</button>
 </div>
-<div class="popup" id="popup">
-  <div class="p-word" id="pWord"></div><div class="p-ph" id="pPh"></div>
-  <div class="p-zh" id="pZh">加载中...</div><div class="p-syn" id="pSyn"></div>
-  <div class="p-acts">
-    <button class="p-btn" onclick="speakWord(currentWord)">🔊 发音</button>
-    <button class="p-btn" id="pAdd" onclick="doAdd()">+ 加入词单</button>
+<div class="pop" id="pop">
+  <div class="pw" id="pw"></div>
+  <div class="pp" id="pp"></div>
+  <div class="pz" id="pz">加载中...</div>
+  <div class="ps" id="ps"></div>
+  <div class="pa">
+    <button class="pb" onclick="spk(curW)">🔊 发音</button>
+    <button class="pb" id="padd" onclick="doAdd()">+ 加入词单</button>
   </div>
 </div>
-<div class="loading" id="loading"><div class="spin"></div><div class="load-txt" id="loadTxt">分析中...</div></div>
-<div class="toast" id="toast"></div>
+<div class="lov" id="lov"><div class="sp"></div><div class="lt" id="lt">分析中...</div></div>
+<div class="tst" id="tst"></div>
 <script>
-const OR_KEY='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';
-const OR_URL='https://openrouter.ai/api/v1/chat/completions';
-const OR_MODEL='anthropic/claude-sonnet-4-5';
-const SB_URL='https://wbgmyoolenmbvnfeupkll.supabase.co';
-const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndiZ215b29lbmJtdm5mZXVwa2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MjEyNjcsImV4cCI6MjA5MTI5NzI2N30.i3d4C1p7j1P24UNaa_4GRSq_m3NmvcFzaUvo93FXxgw';
-
-let lesson=null,vocab=[],chatHistory=[],chatMode='tutor',currentWord='',popupData={},sumOpen=true,isTalking=false;
-
-const ORH={'Content-Type':'application/json','Authorization':'Bearer '+OR_KEY,'HTTP-Referer':'https://rad-paletas-bf3535.netlify.app','X-Title':'Julia Secretary'};
-
-async function ai(prompt,sys=''){
-  const msgs=[];
-  if(sys)msgs.push({role:'system',content:sys});
-  msgs.push({role:'user',content:prompt});
-  const r=await fetch(OR_URL,{method:'POST',headers:ORH,body:JSON.stringify({model:OR_MODEL,messages:msgs,max_tokens:2048,temperature:0.7})});
+const ORK='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';
+const ORU='https://openrouter.ai/api/v1/chat/completions';
+const ORM='anthropic/claude-sonnet-4-5';
+const SBU='https://wbgmyoolenmbvnfeupkll.supabase.co';
+const SBK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndiZ215b29lbmJtdm5mZXVwa2xsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MjEyNjcsImV4cCI6MjA5MTI5NzI2N30.i3d4C1p7j1P24UNaa_4GRSq_m3NmvcFzaUvo93FXxgw';
+let lesson=null,vocab=[],chatHist=[],chatMode='tutor',curW='',popD={},sumOpen=true,talking=false;
+const ORH={'Content-Type':'application/json','Authorization':'Bearer '+ORK,'HTTP-Referer':'https://rad-paletas-bf3535.netlify.app','X-Title':'JuliaSecretary'};
+const SBH={'apikey':SBK,'Authorization':'Bearer '+SBK,'Content-Type':'application/json'};
+async function callAI(msgs){
+  const r=await fetch(ORU,{method:'POST',headers:ORH,body:JSON.stringify({model:ORM,messages:msgs,max_tokens:1500,temperature:0.7})});
   const d=await r.json();
-  if(d.error)throw new Error(d.error.message||JSON.stringify(d.error));
+  if(d.error)throw new Error(d.error.message||'AI错误');
   return d.choices?.[0]?.message?.content||'';
 }
-
-async function aiChat(messages,sys){
-  const msgs=[];
-  if(sys)msgs.push({role:'system',content:sys});
-  messages.forEach(m=>msgs.push({role:m.role==='ai'?'assistant':'user',content:m.content}));
-  const r=await fetch(OR_URL,{method:'POST',headers:ORH,body:JSON.stringify({model:OR_MODEL,messages:msgs,max_tokens:1024,temperature:0.85})});
-  const d=await r.json();
-  if(d.error)throw new Error(d.error.message||JSON.stringify(d.error));
-  return d.choices?.[0]?.message?.content||'';
-}
-
-const SH={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
-async function sbGet(t,q=''){const r=await fetch(`${SB_URL}/rest/v1/${t}?${q}&order=created_at.desc`,{headers:SH});return r.json();}
-async function sbPost(t,d){const r=await fetch(`${SB_URL}/rest/v1/${t}`,{method:'POST',headers:{...SH,'Prefer':'return=representation'},body:JSON.stringify(d)});return r.json();}
-async function sbPatch(t,id,d){await fetch(`${SB_URL}/rest/v1/${t}?id=eq.${id}`,{method:'PATCH',headers:SH,body:JSON.stringify(d)});}
-async function sbDel(t,f){await fetch(`${SB_URL}/rest/v1/${t}?${f}`,{method:'DELETE',headers:SH});}
-
-async function init(){
-  try{const ls=await sbGet('lessons','is_active=eq.true&limit=1');if(ls?.length)document.getElementById('resumeBtn').style.display='block';}catch(e){}
-}
+async function sbGet(t,q=''){const r=await fetch(SBU+'/rest/v1/'+t+'?'+q+'&order=created_at.desc',{headers:SBH});return r.json();}
+async function sbPost(t,d){const r=await fetch(SBU+'/rest/v1/'+t,{method:'POST',headers:{...SBH,'Prefer':'return=representation'},body:JSON.stringify(d)});return r.json();}
+async function sbPatch(t,id,d){await fetch(SBU+'/rest/v1/'+t+'?id=eq.'+id,{method:'PATCH',headers:SBH,body:JSON.stringify(d)});}
+async function sbDel(t,f){await fetch(SBU+'/rest/v1/'+t+'?'+f,{method:'DELETE',headers:SBH});}
+async function init(){try{const ls=await sbGet('lessons','is_active=eq.true&limit=1');if(ls&&ls.length)document.getElementById('resumeBtn').style.display='block';}catch(e){}}
 init();
-
 async function handleUpload(e){
   const file=e.target.files[0];if(!file)return;
-  showLoad('读取文件...');
+  showL('读取文件: '+file.name);
   let text='';
-  try{
-    if(file.name.endsWith('.epub'))text=await readEpub(file);
-    else text=await file.text();
-  }catch(err){hideLoad();toast('读取失败，请重试');return;}
-  if(!text||text.length<50){hideLoad();toast('内容为空');return;}
-  await processLesson(text.slice(0,7000),file.name);
+  try{if(file.name.endsWith('.epub')){text=await readEpub(file);}else{text=await file.text();}}
+  catch(err){hideL();toast('读取失败: '+err.message);return;}
+  if(!text||text.length<50){hideL();toast('内容为空，请检查文件');return;}
+  toast('读取成功，开始分析...');
+  await processLesson(text.slice(0,6000),file.name);
 }
-
 async function readEpub(file){
   const buf=await file.arrayBuffer();
   const raw=new TextDecoder('utf-8',{fatal:false}).decode(new Uint8Array(buf));
@@ -250,329 +231,251 @@ async function readEpub(file){
   if(bodies.length)return bodies.map(m=>m[1].replace(/<[^>]+>/g,' ').replace(/\s+/g,' ')).join(' ').trim();
   return raw.replace(/<[^>]+>/g,' ').replace(/&[a-z]+;/gi,' ').replace(/\s+/g,' ').trim();
 }
-
 async function processLesson(text,filename){
-  showLoad('AI识别科目...');
+  showL('AI分析科目...');
   try{
-    const metaRaw=await ai(`Analyze this university lesson. Return ONLY valid JSON, no markdown, no extra text:\n{"title":"string","subject":"English subject name","subject_zh":"科目中文名","summary_zh":"2句中文摘要","summary_en":"2 sentence English summary","key_concepts":["c1","c2","c3","c4"],"core_question":"key question in English","artworks":[{"artist":"name","work":"title","year":"y"}]}\n\nTEXT:\n${text.slice(0,2500)}`);
+    const metaRaw=await callAI([
+      {role:'system',content:'You are a university lesson analyzer. Return ONLY valid JSON, no markdown, no extra text.'},
+      {role:'user',content:'Analyze this lesson and return JSON:\n{"title":"string","subject":"English name","subject_zh":"中文科目","summary_zh":"2句中文摘要","summary_en":"2 sentence English","key_concepts":["c1","c2","c3","c4"],"core_question":"key question","artworks":[{"artist":"name","work":"title","year":"y"}]}\n\nTEXT:\n'+text.slice(0,2000)}
+    ]);
     const j1=metaRaw.indexOf('{'),j2=metaRaw.lastIndexOf('}');
-    if(j1===-1)throw new Error('AI返回格式错误，请重试');
+    if(j1===-1)throw new Error('AI返回格式错误');
     const meta=JSON.parse(metaRaw.slice(j1,j2+1));
-    showLoad('整理正文...');
-    const cleaned=await ai(`Reformat this lesson text for clean reading. Keep ALL original English text exactly. Add ## for section headings. Fix broken lines into proper paragraphs. Return plain text only, no JSON, no commentary:\n\n${text.slice(0,5000)}`);
+    showL('整理正文格式...');
+    const cleaned=await callAI([
+      {role:'system',content:'Reformat lesson text for clean reading. Keep ALL original English. Add ## for section headings. Fix broken lines. Return plain text only.'},
+      {role:'user',content:text.slice(0,5000)}
+    ]);
     meta.processed_content=cleaned||text;
-    showLoad('保存到云端...');
+    showL('保存到云端...');
     const old=await sbGet('lessons','is_active=eq.true');
-    if(old?.length)for(const l of old)await sbPatch('lessons',l.id,{is_active:false});
-    const saved=await sbPost('lessons',{title:meta.title||filename,subject:`${meta.subject} · ${meta.subject_zh}`,content:meta.processed_content,summary:JSON.stringify(meta),is_active:true});
-    if(!saved?.[0])throw new Error('云端保存失败');
-    lesson=saved[0];lesson._meta=meta;vocab=[];
-    renderLesson(meta);hideLoad();
-    setTimeout(initChat,600);
-  }catch(err){hideLoad();toast('失败: '+err.message);console.error(err);}
+    if(old&&old.length)for(const l of old)await sbPatch('lessons',l.id,{is_active:false});
+    const saved=await sbPost('lessons',{title:meta.title||filename,subject:(meta.subject||'')+(meta.subject_zh?' · '+meta.subject_zh:''),content:meta.processed_content,summary:JSON.stringify(meta),is_active:true});
+    if(!saved||!saved[0])throw new Error('云端保存失败');
+    lesson=saved[0];lesson._m=meta;vocab=[];
+    renderLesson(meta);hideL();
+    setTimeout(initChat,800);
+  }catch(err){hideL();toast('失败: '+err.message);console.error(err);}
 }
-
 async function resumeLesson(){
-  showLoad('加载课程...');
+  showL('加载课程...');
   try{
     const ls=await sbGet('lessons','is_active=eq.true&limit=1');
-    if(!ls?.length){hideLoad();toast('没有保存的课程');return;}
+    if(!ls||!ls.length){hideL();toast('没有保存的课程');return;}
     lesson=ls[0];
-    try{lesson._meta=JSON.parse(lesson.summary);}catch(e){lesson._meta={};}
-    vocab=await sbGet('vocab_items',`lesson_id=eq.${lesson.id}`)||[];
-    renderLesson(lesson._meta);hideLoad();
-    setTimeout(initChat,600);
-  }catch(e){hideLoad();toast('加载失败: '+e.message);}
+    try{lesson._m=JSON.parse(lesson.summary);}catch(e){lesson._m={};}
+    const vs=await sbGet('vocab_items','lesson_id=eq.'+lesson.id);
+    vocab=vs||[];renderLesson(lesson._m);hideL();
+    setTimeout(initChat,800);
+  }catch(e){hideL();toast('加载失败: '+e.message);}
 }
-
-function renderLesson(meta){
-  document.getElementById('uploadScreen').style.display='none';
-  document.getElementById('lessonView').style.display='block';
-  document.getElementById('subTag').textContent=meta.subject||lesson.subject||'';
-  document.getElementById('sTitle').textContent=meta.title||'';
-  document.getElementById('sSubject').textContent=(meta.subject||'')+(meta.subject_zh?' · '+meta.subject_zh:'');
-  document.getElementById('sText').innerHTML=`<b>EN</b> ${meta.summary_en||''}<br><br><b>中</b> ${meta.summary_zh||''}`;
-  document.getElementById('sConcepts').innerHTML=(meta.key_concepts||[]).map(c=>`<span class="s-tag">${c}</span>`).join('');
-  document.getElementById('sQ').textContent=meta.core_question?`"${meta.core_question}"` :'';
-  if(meta.artworks?.length)renderArtworks(meta.artworks);
-  renderContent(meta.processed_content||lesson.content||'');
-  renderVocab();updateVocabN();
+function renderLesson(m){
+  document.getElementById('uscreen').style.display='none';
+  document.getElementById('lv').style.display='block';
+  document.getElementById('subTag').textContent=m.subject||lesson.subject||'';
+  document.getElementById('sTi').textContent=m.title||'';
+  document.getElementById('sSu').textContent=(m.subject||'')+(m.subject_zh?' · '+m.subject_zh:'');
+  document.getElementById('sTx').innerHTML='<b>EN</b> '+(m.summary_en||'')+'<br><br><b>中</b> '+(m.summary_zh||'');
+  document.getElementById('sCo').innerHTML=(m.key_concepts||[]).map(c=>'<span class="s-tg">'+c+'</span>').join('');
+  document.getElementById('sQu').textContent=m.core_question?'"'+m.core_question+'"':'';
+  if(m.artworks&&m.artworks.length)renderAW(m.artworks);
+  renderCtx(m.processed_content||lesson.content||'');
+  renderVocab();updateVN();
 }
-
-function renderArtworks(aws){
-  const el=document.getElementById('artworks');el.style.display='flex';
-  el.innerHTML=aws.map((a,i)=>`<div class="aw-item"><div class="aw-img" id="awi${i}">${a.artist}<br><span style="color:#444">${a.year||''}</span></div><div class="aw-cap">${a.work||''}<br>${a.artist||''}</div></div>`).join('');
-  aws.forEach((a,i)=>{
-    fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(a.artist.split(' ').pop())}`)
-      .then(r=>r.json()).then(d=>{if(d.thumbnail?.source){const el=document.getElementById(`awi${i}`);if(el){el.style.backgroundImage=`url(${d.thumbnail.source})`;el.style.backgroundSize='cover';el.style.backgroundPosition='center';el.innerHTML='';}}}). catch(()=>{});
-  });
+function renderAW(aws){
+  const el=document.getElementById('aws');el.style.display='flex';
+  el.innerHTML=aws.map((a,i)=>'<div class="aw"><div class="ai" id="ai'+i+'">'+(a.artist||'')+'<br><span style="color:#444">'+(a.year||'')+'</span></div><div class="ac">'+(a.work||'')+'<br>'+(a.artist||'')+'</div></div>').join('');
+  aws.forEach((a,i)=>{fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent((a.artist||'').split(' ').pop())).then(r=>r.json()).then(d=>{if(d.thumbnail&&d.thumbnail.source){const el=document.getElementById('ai'+i);if(el){el.style.backgroundImage='url('+d.thumbnail.source+')';el.style.backgroundSize='cover';el.style.backgroundPosition='center';el.innerHTML='';}}}).catch(()=>{});});
 }
-
-function renderContent(md){
+function renderCtx(md){
   const sel=new Set(vocab.filter(v=>v.selected).map(v=>v.word.toLowerCase()));
   const done=new Set(vocab.filter(v=>v.mastered).map(v=>v.word.toLowerCase()));
   let html=md.replace(/^## (.+)$/gm,'<h2>$1</h2>').replace(/^# (.+)$/gm,'<h1>$1</h1>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'</p><p>').replace(/\n/g,' ');
   html='<p>'+html+'</p>';
-  html=html.replace(/(<[^>]+>)|([A-Za-zÀ-ÖØ-öø-ÿ''\-]+)/g,(m,tag,word)=>{
+  html=html.replace(/(<[^>]+>)|([A-Za-z\u00C0-\u024F''\-]+)/g,function(m,tag,word){
     if(tag)return tag;if(!word||word.length<3)return word;
-    const lo=word.toLowerCase();
-    const cls=done.has(lo)?'w done':sel.has(lo)?'w sel':'w';
-    return `<span class="${cls}" onclick="clickWord(event,'${lo}','${word.replace(/'/g,"\\'")}')">${word}</span>`;
+    var lo=word.toLowerCase();
+    var cls=done.has(lo)?'w done':sel.has(lo)?'w sel':'w';
+    return '<span class="'+cls+'" onclick="clickW(event,\''+lo+'\',\''+word.replace(/'/g,"\\'")+'\')">'+word+'</span>';
   });
-  document.getElementById('contentText').innerHTML=html;
+  document.getElementById('ctx').innerHTML=html;
 }
-
-async function clickWord(e,lo,orig){
-  e.stopPropagation();currentWord=lo;
-  const existing=vocab.find(v=>v.word.toLowerCase()===lo&&v.selected);
-  document.getElementById('pWord').textContent=orig;
-  document.getElementById('pPh').textContent='';
-  document.getElementById('pZh').textContent=existing?.zh||'加载中...';
-  document.getElementById('pSyn').textContent=existing?.synonyms?'近义 · '+existing.synonyms:'';
-  const addBtn=document.getElementById('pAdd');
-  addBtn.textContent=existing?'✓ 已在词单':'+ 加入词单';
-  addBtn.className='p-btn'+(existing?' on':'');
-  popupData={lo,orig,existing};
+async function clickW(e,lo,orig){
+  e.stopPropagation();curW=lo;
+  const ex=vocab.find(v=>v.word.toLowerCase()===lo&&v.selected);
+  document.getElementById('pw').textContent=orig;
+  document.getElementById('pp').textContent='';
+  document.getElementById('pz').textContent=ex?ex.zh:'加载中...';
+  document.getElementById('ps').textContent=ex&&ex.synonyms?'近义 · '+ex.synonyms:'';
+  const ab=document.getElementById('padd');
+  ab.textContent=ex?'✓ 已在词单':'+ 加入词单';
+  ab.className='pb'+(ex?' on':'');
+  popD={lo,orig,ex};
   const rect=e.target.getBoundingClientRect();
-  const popup=document.getElementById('popup');
-  popup.style.left=Math.max(8,Math.min(rect.left,window.innerWidth-260))+'px';
-  popup.style.top=(rect.bottom+window.scrollY+6)+'px';
-  popup.classList.add('on');
-  if(!existing)fetchDef(lo,orig);
+  const pop=document.getElementById('pop');
+  pop.style.left=Math.max(8,Math.min(rect.left,window.innerWidth-260))+'px';
+  pop.style.top=(rect.bottom+window.scrollY+6)+'px';
+  pop.classList.add('on');
+  if(!ex)fetchDef(lo,orig);
 }
-
 async function fetchDef(lo,orig){
   try{
-    const raw=await ai(`Word: "${orig}" used in: ${lesson?.subject||'art'}. Return ONLY this JSON with no other text: {"phonetic":"/pronunciation/ British IPA","zh":"中文释义2-4字","synonyms":"synonym1, synonym2","type":"noun"}`);
+    const raw=await callAI([
+      {role:'system',content:'Return ONLY valid JSON, no other text.'},
+      {role:'user',content:'Word: "'+orig+'" in context of '+(lesson&&lesson.subject||'art')+'. JSON: {"phonetic":"/x/ British IPA","zh":"中文2-4字","synonyms":"w1, w2","type":"noun"}'}
+    ]);
     const j1=raw.indexOf('{'),j2=raw.lastIndexOf('}');
     if(j1===-1)return;
     const def=JSON.parse(raw.slice(j1,j2+1));
-    popupData.def=def;
-    if(currentWord===lo&&document.getElementById('popup').classList.contains('on')){
-      document.getElementById('pPh').textContent=def.phonetic||'';
-      document.getElementById('pZh').textContent=def.zh||orig;
-      document.getElementById('pSyn').textContent=def.synonyms?'近义 · '+def.synonyms:'';
+    popD.def=def;
+    if(curW===lo&&document.getElementById('pop').classList.contains('on')){
+      document.getElementById('pp').textContent=def.phonetic||'';
+      document.getElementById('pz').textContent=def.zh||orig;
+      document.getElementById('ps').textContent=def.synonyms?'近义 · '+def.synonyms:'';
     }
-  }catch(e){document.getElementById('pZh').textContent=orig;}
+  }catch(e){document.getElementById('pz').textContent=orig;}
 }
-
 async function doAdd(){
-  const{lo,orig,existing,def}=popupData;
-  if(existing){
-    await sbDel('vocab_items',`id=eq.${existing.id}`);
-    vocab=vocab.filter(v=>v.id!==existing.id);toast('已移除');
+  const lo=popD.lo,orig=popD.orig,ex=popD.ex,def=popD.def;
+  if(ex){
+    await sbDel('vocab_items','id=eq.'+ex.id);
+    vocab=vocab.filter(v=>v.id!==ex.id);toast('已移除');
   }else{
-    const data={lesson_id:lesson.id,word:orig,phonetic:def?.phonetic||'',zh:def?.zh||'',synonyms:def?.synonyms||'',type:def?.type||'',selected:true,mastered:false,review_count:0};
+    const data={lesson_id:lesson.id,word:orig,phonetic:def?def.phonetic||'':'',zh:def?def.zh||'':'',synonyms:def?def.synonyms||'':'',type:def?def.type||'':'',selected:true,mastered:false,review_count:0};
     const saved=await sbPost('vocab_items',data);
-    if(saved?.[0])vocab.push(saved[0]);
+    if(saved&&saved[0])vocab.push(saved[0]);
     toast('已加入: '+orig);
   }
-  document.getElementById('popup').classList.remove('on');
-  renderContent(lesson._meta?.processed_content||lesson.content);
-  renderVocab();updateVocabN();
+  document.getElementById('pop').classList.remove('on');
+  renderCtx(lesson._m?lesson._m.processed_content||lesson.content:lesson.content);
+  renderVocab();updateVN();
 }
-
-function toggleDrawer(){const d=document.getElementById('vdrawer');d.classList.toggle('on');if(d.classList.contains('on'))renderVocab();}
-
+function toggleVdr(){const d=document.getElementById('vdr');d.classList.toggle('on');if(d.classList.contains('on'))renderVocab();}
 function renderVocab(){
   const sel=vocab.filter(v=>v.selected);
-  document.getElementById('vdSub').textContent=`本课 ${sel.length} 词 · ${sel.filter(v=>v.mastered).length} 已掌握`;
-  const list=document.getElementById('vdList');
-  if(!sel.length){list.innerHTML='<div class="vd-empty">还没有选词<br>点击正文单词添加</div>';return;}
-  list.innerHTML=sel.map(v=>`<div class="vd-row ${v.mastered?'done':''}"><div class="vd-word">${v.word}</div><div class="vd-zh">${v.zh||''}</div><div class="vd-acts"><button class="vd-btn" onclick="speakWord('${v.word}')">♪</button><button class="vd-btn" onclick="markDone('${v.id}')">${v.mastered?'↩':'✓'}</button><button class="vd-btn" onclick="rmWord('${v.id}')">×</button></div></div>`).join('');
+  document.getElementById('vsub').textContent='本课 '+sel.length+' 词 · '+sel.filter(v=>v.mastered).length+' 已掌握';
+  const list=document.getElementById('vlist');
+  if(!sel.length){list.innerHTML='<div class="ve">还没有选词<br>点击正文单词添加</div>';return;}
+  list.innerHTML=sel.map(v=>'<div class="vr'+(v.mastered?' done':'')+'"><div class="vw">'+v.word+'</div><div class="vz">'+(v.zh||'')+'</div><div class="va"><button class="vb" onclick="spk(\''+v.word+'\')">♪</button><button class="vb" onclick="markDone(\''+v.id+'\')">'+(v.mastered?'↩':'✓')+'</button><button class="vb" onclick="rmW(\''+v.id+'\')">×</button></div></div>').join('');
 }
-
-function updateVocabN(){document.getElementById('vcN').textContent=vocab.filter(v=>v.selected).length;}
-
+function updateVN(){document.getElementById('vcn').textContent=vocab.filter(v=>v.selected).length;}
 async function markDone(id){
   const v=vocab.find(x=>x.id===id);if(!v)return;
   v.mastered=!v.mastered;
   await sbPatch('vocab_items',id,{mastered:v.mastered});
-  renderVocab();renderContent(lesson._meta?.processed_content||lesson.content);
+  renderVocab();renderCtx(lesson._m?lesson._m.processed_content||lesson.content:lesson.content);
   toast(v.mastered?'✓ 已掌握':'↩ 取消');
 }
-
-async function rmWord(id){
-  await sbDel('vocab_items',`id=eq.${id}`);
+async function rmW(id){
+  await sbDel('vocab_items','id=eq.'+id);
   vocab=vocab.filter(v=>v.id!==id);
-  renderVocab();updateVocabN();
-  renderContent(lesson._meta?.processed_content||lesson.content);
+  renderVocab();updateVN();
+  renderCtx(lesson._m?lesson._m.processed_content||lesson.content:lesson.content);
 }
-
 async function endLesson(){
   if(!lesson)return;
-  if(!confirm('结束本课？词汇记录将保留。'))return;
+  if(!confirm('结束本课？'))return;
   await sbPatch('lessons',lesson.id,{is_active:false});
-  lesson=null;vocab=[];chatHistory=[];
-  document.getElementById('lessonView').style.display='none';
-  document.getElementById('uploadScreen').style.display='flex';
-  document.getElementById('subTag').textContent='— 上传课程文件 —';
-  document.getElementById('vdrawer').classList.remove('on');
-  document.getElementById('fileInput').value='';
+  lesson=null;vocab=[];chatHist=[];
+  document.getElementById('lv').style.display='none';
+  document.getElementById('uscreen').style.display='flex';
+  document.getElementById('subTag').textContent='上传课程文件';
+  document.getElementById('vdr').classList.remove('on');
+  document.getElementById('fi').value='';
   toast('课程已结束');
 }
-
-function speakWord(w){
+function spk(w){
   if(!w)return;speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(w);u.lang='en-GB';u.rate=0.82;
   const vs=speechSynthesis.getVoices();
-  const gb=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.name.includes('Daniel')||v.name.includes('Kate'));
+  const gb=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.name.indexOf('Daniel')>=0||v.name.indexOf('Kate')>=0);
   if(gb)u.voice=gb;speechSynthesis.speak(u);
 }
-
-let rIdx=0,rSents=[];
+var rIdx=0,rSents=[];
 function toggleRead(){
-  if(isTalking){stopRead();return;}isTalking=true;
-  document.getElementById('readBtn').textContent='■ 朗读中';document.getElementById('readBtn').classList.add('on');
-  const text=document.getElementById('contentText').innerText;
+  if(talking){stopRead();return;}talking=true;
+  document.getElementById('readBtn').textContent='■ 朗读中';
+  document.getElementById('readBtn').classList.add('on');
+  var text=document.getElementById('ctx').innerText;
   rSents=text.match(/[^.!?]+[.!?]+/g)||[text];rIdx=0;readNext();
 }
 function readNext(){
-  if(!isTalking||rIdx>=rSents.length){stopRead();return;}
-  const u=new SpeechSynthesisUtterance(rSents[rIdx]);u.lang='en-GB';u.rate=0.8;
-  const vs=speechSynthesis.getVoices();
-  const gb=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.name.includes('Daniel'));
-  if(gb)u.voice=gb;u.onend=()=>{rIdx++;readNext();};speechSynthesis.speak(u);
+  if(!talking||rIdx>=rSents.length){stopRead();return;}
+  var u=new SpeechSynthesisUtterance(rSents[rIdx]);u.lang='en-GB';u.rate=0.8;
+  var vs=speechSynthesis.getVoices();
+  var gb=vs.find(function(v){return v.lang==='en-GB';})||vs.find(function(v){return v.name.indexOf('Daniel')>=0;});
+  if(gb)u.voice=gb;u.onend=function(){rIdx++;readNext();};speechSynthesis.speak(u);
 }
-function stopRead(){isTalking=false;speechSynthesis.cancel();document.getElementById('readBtn').textContent='▶ 朗读';document.getElementById('readBtn').classList.remove('on');}
-setTimeout(()=>speechSynthesis.getVoices(),300);
-
+function stopRead(){talking=false;speechSynthesis.cancel();document.getElementById('readBtn').textContent='▶ 朗读';document.getElementById('readBtn').classList.remove('on');}
+setTimeout(function(){speechSynthesis.getVoices();},300);
 function toggleChat(){
-  const p=document.getElementById('chatPanel');const r=document.getElementById('reading');
-  const on=p.classList.toggle('on');
-  document.getElementById('chatHbtn').classList.toggle('on',on);
+  var p=document.getElementById('cp');var r=document.getElementById('rd');
+  var on=p.classList.toggle('on');
+  document.getElementById('chatBtn').classList.toggle('on',on);
   if(window.innerWidth>600)r.classList.toggle('pushed',on);
-  if(on&&!chatHistory.length)initChat();
+  if(on&&!chatHist.length)initChat();
 }
-
 function setMode(m){
-  chatMode=m;document.querySelectorAll('.cp-mode').forEach(b=>b.classList.remove('on'));
+  chatMode=m;
+  document.querySelectorAll('.cpb').forEach(function(b){b.classList.remove('on');});
   document.getElementById('cm-'+m).classList.add('on');
-  chatHistory=[];document.getElementById('cpMsgs').innerHTML='';initChat();
+  chatHist=[];document.getElementById('cms').innerHTML='';initChat();
 }
-
 function getSys(){
-  const subj=lesson?.subject||'art and philosophy';
-  let ctx='';
-  if(lesson?._meta){const m=lesson._meta;ctx=`当前课程:"${m.title}"。核心概念:${(m.key_concepts||[]).join(', ')}。核心问题:${m.core_question||''}`;}
-  const rw=vocab.slice(-8).map(v=>v.word).join(', ')||'aesthetics, phenomenology';
-
-  const STUDENT=`【学生档案】
-姓名：Julia（朱砚桐），中国女生，在米兰NABA学习绘画与视觉艺术本科一年级。
-英语水平：B1（读写接近B2，口语听力很弱）。
-特征：ADHD，注意力容易分散，焦虑，内向害羞，不喜欢开口说英语。
-目标：2年内通过B2/C1口语考试，能用英语自信讨论艺术作品和理论。
-当前科目：${subj}。${ctx}
-最近学过的词汇：${rw}。
-重要：她容易受挫，需要鼓励，绝不能让她感到被评判或嘲笑。`;
-
-  const ps={
-    tutor:`${STUDENT}
-
-【你的角色】热情博学的艺术哲学教授，中英文都很流利，真心热爱自己教的内容。
-
-【规则】
-- 每次回复最多4句话。ADHD特性意味着长篇大论会直接让她放弃阅读。
-- 优先用中文回答，关键英文术语加括号标注，例如：现象学[phenomenology]
-- 每次回答包含一个生动的比喻或具体艺术作品举例
-- 回答结尾提一个让她好奇的问题，引导她继续思考
-- 她问任何题外话（科学、生活、八卦）都认真回答——好奇心比课程重要
-- 绝不说"这很简单"或"显然"
-- 开场：询问今天课程里让她最困惑或最感兴趣的部分`,
-
-    oral:`${STUDENT}
-
-【你的角色】专门帮助害羞中国艺术生通过口语考试的暖心教练，见过太多和Julia一样的学生，都成功了。
-
-【课程结构，每次对话按顺序推进】
-1. 热身（2-3轮）：聊她今天做了什么、在米兰看到什么、吃了什么——零压力，不涉及艺术理论
-2. 过渡（2-3轮）：把她的回答自然地和艺术联系起来
-3. 练习（主要部分）：用今天课程的一个概念提问，以对话方式而非考试方式
-4. 模拟（可选）：只有她明显放松了才进行一道真实考试题
-
-【纠正规则】
-- 绝不打断。等她完整说完。
-- 每次最多指出1-2个错误，在她回答之后：「说得好！有一点小建议：把[错误]换成[正确]，因为…」
-- 她用中文回答时：「我完全听懂了！能不能试着用英文说第一句？我帮你。」
-- 为每一次英文尝试喝彩，哪怕只有三个词
-- 开场：用轻松愉快的方式问她最近的生活`,
-
-    write:`${STUDENT}
-
-【你的角色】把无数「我完全不会写英文」的学生变成自信写作者的写作教练。秘诀：极小的成功，一句话一句话来。
-
-【每次课程流程】
-给她一个极小任务（从最简单的开始）：
-a）「完成这句话：In this lesson, I think art means ___」
-b）「用恰好8个英文单词描述今天课程里的一件艺术品」
-c）「写一句话：今天在米兰你注意到了什么？」（任何内容都行）
-
-【批改格式（每次都用这个）】
-✗ 你写的：[她的原文]
-✓ 建议改成：[修改版]
-💡 原因：[一句话解释]
-→ 下一步：[稍微难一点点的任务]
-
-她用中文写时：帮她翻译成简单英文，然后说「把这句话大声读出来——这也算练习」。
-开场：用最轻松的语气给她一个任务，让她感觉「这我肯定能做到」。`,
-
-    free:`${STUDENT}
-
-【你的角色】她在米兰认识的聪明有趣的朋友，你们自然地混着中英文聊天。
-
-- 回复简短（3-4句）
-- 中英混搭很自然：「今天去看了个展览，honestly it was so 震撼[overwhelming]…」
-- 用到有趣的英文词时顺带解释：括号里加中文
-- 真心好奇她的生活，问有意思的问题
-- 开场：分享一个关于艺术或米兰的有趣冷知识，然后问她最近在想什么`
+  var subj=lesson?lesson.subject||'art':'art';
+  var ctx='';
+  if(lesson&&lesson._m){var mm=lesson._m;ctx='当前课程:"'+(mm.title||'')+'". 核心概念:'+(mm.key_concepts||[]).join(',')+'.';}
+  var rw=vocab.slice(-8).map(function(v){return v.word;}).join(', ')||'aesthetics, phenomenology';
+  var P='【学生档案】Julia（朱砚桐），中国女生，NABA米兰绘画与视觉艺术本科一年级。英语B1（读写接近B2，口语听力很弱）。ADHD，焦虑，内向害羞。目标：2年内通过B2/C1口语考试。当前科目：'+subj+'。'+ctx+' 最近学过：'+rw+'。重要：容易受挫，需要鼓励，不能让她感到被评判。';
+  var ps={
+    tutor:P+'\n\n你是热情博学的艺术哲学教授，中英双语流利，真心热爱所教内容。规则：每次最多4句；优先中文回答，英文术语加括号如现象学[phenomenology]；每次一个生动比喻或艺术作品举例；结尾一个引发好奇的问题；任何题外话都认真回答；绝不说"这很简单"。开场：询问今天课程里让她最困惑或最感兴趣的部分。',
+    oral:P+'\n\n你是专门帮助害羞中国艺术生通过口语考试的暖心教练。课程顺序：1)热身2-3轮聊日常生活零压力 2)自然过渡到艺术话题 3)用今天课程概念对话练习 4)只有她放松了才做模拟考试题。纠正规则：绝不打断等她完整说完；最多指出2个错误并在她回答后说；她用中文回答时温柔鼓励试一句英文；为每次英文尝试喝彩哪怕只有三个词。开场：用轻松方式问她最近生活。',
+    write:P+'\n\n你是把"完全不会写英文"的学生变成自信写作者的写作教练。每次给一个极小任务：a)完成句子"In this lesson art means ___" b)用8个英文单词描述一件艺术品 c)写一句关于今天米兰的话。批改格式固定：✗你写的:[原文] ✓建议:[修改] 💡原因:[一句话] →下一步:[稍难任务]。她用中文写时帮翻译并说"大声读出来也算练习"。开场：给最简单的任务让她感觉"这我肯定能做到"。',
+    free:P+'\n\n你是她在米兰认识的聪明有趣朋友，自然地混着中英文聊天。回复简短3-4句。中英混搭自然，有趣英文词顺带解释。真心好奇她的生活。开场：分享一个关于艺术或米兰的有趣冷知识，然后问她最近在想什么。'
   };
-  return ps[chatMode];
+  return ps[chatMode]||ps.tutor;
 }
-
 async function initChat(){
   addDots();
   try{
-    const r=await aiChat([{role:'user',content:'开始吧。'}],getSys());
-    removeDots();addMsg('ai',r);chatHistory.push({role:'ai',content:r});
+    var r=await callAI([{role:'system',content:getSys()},{role:'user',content:'开始吧。'}]);
+    removeDots();addMsg('ai',r);chatHist.push({role:'ai',content:r});
   }catch(e){removeDots();addMsg('ai','连接失败: '+e.message);}
 }
-
 async function sendMsg(){
-  const inp=document.getElementById('cpIn');const txt=inp.value.trim();if(!txt)return;
+  var inp=document.getElementById('cin');var txt=inp.value.trim();if(!txt)return;
   inp.value='';inp.style.height='auto';
-  addMsg('user',txt);chatHistory.push({role:'user',content:txt});addDots();
+  addMsg('user',txt);chatHist.push({role:'user',content:txt});addDots();
   try{
-    const r=await aiChat(chatHistory.slice(-16),getSys());
-    removeDots();addMsg('ai',r);chatHistory.push({role:'ai',content:r});
+    var msgs=[{role:'system',content:getSys()}];
+    chatHist.slice(-16).forEach(function(m){msgs.push({role:m.role==='ai'?'assistant':'user',content:m.content});});
+    var r=await callAI(msgs);
+    removeDots();addMsg('ai',r);chatHist.push({role:'ai',content:r});
   }catch(e){removeDots();addMsg('ai','出错: '+e.message);}
 }
-
 function addMsg(role,text){
-  const el=document.getElementById('cpMsgs');
-  const d=document.createElement('div');d.className=`msg msg-${role}`;d.textContent=text;
+  var el=document.getElementById('cms');
+  var d=document.createElement('div');d.className='mg mg-'+(role==='ai'?'ai':'us');d.textContent=text;
   el.appendChild(d);el.scrollTop=el.scrollHeight;
 }
 function addDots(){
-  const el=document.getElementById('cpMsgs');
-  const d=document.createElement('div');d.className='msg msg-ai';d.id='dots';
+  var el=document.getElementById('cms');
+  var d=document.createElement('div');d.className='mg mg-ai';d.id='dots';
   d.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
   el.appendChild(d);el.scrollTop=el.scrollHeight;
 }
-function removeDots(){document.getElementById('dots')?.remove();}
-
+function removeDots(){var t=document.getElementById('dots');if(t)t.remove();}
 function toggleSum(){
   sumOpen=!sumOpen;
-  document.getElementById('sumBody').style.display=sumOpen?'block':'none';
-  document.getElementById('artworks').style.display=sumOpen?'flex':'none';
-  document.getElementById('sumTog').textContent=sumOpen?'收起':'展开';
+  document.getElementById('sbody').style.display=sumOpen?'block':'none';
+  document.getElementById('aws').style.display=sumOpen?'flex':'none';
+  document.getElementById('stog').textContent=sumOpen?'收起':'展开';
 }
-
-function showLoad(t){document.getElementById('loadTxt').textContent=t;document.getElementById('loading').classList.add('on');}
-function hideLoad(){document.getElementById('loading').classList.remove('on');}
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2500);}
-
-document.addEventListener('click',e=>{
-  const p=document.getElementById('popup');
+function showL(t){document.getElementById('lt').textContent=t;document.getElementById('lov').classList.add('on');}
+function hideL(){document.getElementById('lov').classList.remove('on');}
+function toast(msg){var t=document.getElementById('tst');t.textContent=msg;t.classList.add('on');setTimeout(function(){t.classList.remove('on');},2500);}
+document.addEventListener('click',function(e){
+  var p=document.getElementById('pop');
   if(!p.contains(e.target)&&!e.target.classList.contains('w'))p.classList.remove('on');
 });
 </script>
