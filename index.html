@@ -246,7 +246,7 @@ function showKeySetup(){
 async function callAI(msgs){
   var key=getKey();
   if(!key){showKeySetup();throw new Error('请先设置API Key');}
-  var h={'Content-Type':'application/json','Authorization':'Bearer '+key,'HTTP-Referer':'https://rad-paletas-bf3535.netlify.app','X-Title':'JuliaSecretary'};
+  var h={'Content-Type':'application/json','Authorization':'Bearer '+key,'HTTP-Referer':'zhuyantong0205-design.github.io','X-Title':'JuliaSecretary'};
   for(var i=0;i<FREE_MODELS.length;i++){
     var model=FREE_MODELS[modelIdx%FREE_MODELS.length];
     modelIdx++;
